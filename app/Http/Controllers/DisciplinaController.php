@@ -29,28 +29,22 @@ class DisciplinaController extends Controller
     }
 
     public function show($id)
-{
-    $disciplina = Disciplina::find($id);
-    if ($disciplina) {
+    {
+        $disciplina = Disciplina::find($id);
         return response()->json($disciplina);
-    } else {
-        return response()->json(['error' => 'Disciplina not found'], 404);
     }
-}
-
 
     public function store(Request $request)
-{
-    $disciplina = Disciplina::create($request->all());
-    $disciplina = $disciplina->save();
+    {
+        $disciplina = Disciplina::create($request->all());
+        $disciplina = $disciplina->save();
 
-    return redirect()->route('disciplina.index');
-}
+        return redirect()->route('disciplina.index');
+    }
 
     public function update(Request $request, Disciplina $disciplina)
     {
         $disciplina->update($request->all());
-
 
         return $disciplina;
     }

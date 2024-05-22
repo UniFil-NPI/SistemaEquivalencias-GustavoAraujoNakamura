@@ -1,10 +1,14 @@
 <template>
-    <DisciplinaCreate :disciplina="disciplina" :isEditing="true"/>
+    <DisciplinaCreate :disciplina="$page.props.disciplina" :isEditing="true"/>
 </template>
 
 <script>
 import DisciplinaCreate from './DisciplinaCreate.vue';
 import axios from 'axios';
+import {router} from "@inertiajs/vue3"
+import { usePage } from '@inertiajs/vue3';
+
+ const page = usePage();
 
 export default {
     components: {
@@ -12,26 +16,22 @@ export default {
     },
     data() {
         return {
-            disciplina: {codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: ''},
+            disciplina: {id: '', codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: ''},
         };
     },
-    mounted() {
-        this.carregarDisciplina();
+    async mounted() {
+        await this.carregarDisciplina();
     },
+
     methods: {
         async carregarDisciplina() {
             try {
-                const response = await axios.get(`/disciplina/${this.$route.params.id}`);
-                if (response.data) {
-                    this.disciplina = response.data;
-                } else {
-                    console.error('No data returned from the API');
-                }
+                const response = await axios.get(route('disciplina.show', page.props.disciplina.id));
+                this.disciplina = response.data;
             } catch (error) {
                 console.error(error);
             }
-        }
-    }
-}
-;
+        },
+    },
+};
 </script>

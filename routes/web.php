@@ -26,6 +26,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('/disciplina', DisciplinaController::class);
-Route::get('/disciplina/{id}', [DisciplinaController::class, 'show']);
+Route::get('/disciplina/{id}', [DisciplinaController::class, 'show'])->name('disciplina.show');
 
 require __DIR__.'/auth.php';
