@@ -45,6 +45,7 @@ class DisciplinaController extends Controller
     public function update(Request $request, Disciplina $disciplina)
     {
         $disciplina->update($request->all());
+        $disciplina->save();
 
         return $disciplina;
     }

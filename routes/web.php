@@ -27,5 +27,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/disciplina', DisciplinaController::class);
 Route::get('/disciplina/{id}', [DisciplinaController::class, 'show'])->name('disciplina.show');
+Route::patch('/disciplina/{disciplina}', [DisciplinaController::class, 'update'])->name('disciplina.update');
+Route::delete('/disciplina/{disciplina}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
 
 require __DIR__.'/auth.php';
