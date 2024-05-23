@@ -28,24 +28,24 @@ export default {
                 ativo: !!disciplina.ativo,
             }));
         },
-        async salvarDisciplina() {
-            if (this.disciplinaAtual.id) {
-                await this.atualizarDisciplina();
-            } else {
-                await this.criarDisciplina();
-            }
-            this.disciplinaAtual = {codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: false};
-        },
-        async criarDisciplina() {
-            await fetch(route('disciplina.store'), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.disciplinaAtual),
-            });
-            this.carregarDisciplinas();
-        },
+        // async salvarDisciplina() {
+        //     if (this.disciplinaAtual.id) {
+        //         await this.atualizarDisciplina();
+        //     } else {
+        //         await this.criarDisciplina();
+        //     }
+        //     this.disciplinaAtual = {codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: false};
+        // },
+        // async criarDisciplina() {
+        //     await fetch(route('disciplina.store'), {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(this.disciplinaAtual),
+        //     });
+        //     await this.carregarDisciplinas();
+        // },
         async atualizarDisciplina() {
             await fetch(route('disciplina.edit', this.disciplinaAtual.id), {
                 method: 'PUT',
@@ -54,7 +54,7 @@ export default {
                 },
                 body: JSON.stringify(this.disciplinaAtual),
             });
-            this.carregarDisciplinas();
+            await this.carregarDisciplinas();
         },
     },
 };
@@ -63,7 +63,9 @@ export default {
 <template>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
         <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Disciplina' : 'Criar Disciplina' }}</h2>
-        <form class="space-y-4" method="post" action="/disciplina">
+        <form class="space-y-4" method="post"
+              :action="isEditing ? '/disciplina/' + disciplinaAtual.id : '/disciplina'">
+            <input type="hidden" name="_method" :value="isEditing ? 'patch' : 'post' ">
             <input type="hidden" name="_token" :value="$page.props.csrf_token">
             <div class="flex flex-wrap -mx-6">
                 <div class="w-full px-6 mb-6 md:mb-0">
