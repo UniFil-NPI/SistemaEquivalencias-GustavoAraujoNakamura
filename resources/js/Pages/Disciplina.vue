@@ -24,24 +24,27 @@ const deleteDisciplina = async (id) => {
 </script>
 
 <template>
-    <DataTable :value="$page.props.disciplina" paginator :rows="10">
-        <Column field="codigo" header="Código"></Column>
-        <Column field="titulo" header="Titulo"></Column>
-        <Column field="tipo" header="Tipo"></Column>
-        <Column field="periodo" header="Período"></Column>
-        <Column field="carga_horaria" header="Carga Horária"></Column>
-        <Column field="ativo" header="Ativo">
-            <template #body="slotProps">
-                <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
-            </template>
-        </Column>
-        <Column>
-            <template #body="slotProps">
-                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined p-mr-2"
-                        @click="editDisciplina(slotProps.data.id)"></Button>
-                <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
-                        @click="deleteDisciplina(slotProps.data.id)"></Button>
-            </template>
-        </Column>
-    </DataTable>
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
+        <h2 class="mb-4 text-2xl font-bold text-center">Disciplina</h2>
+        <DataTable :value="$page.props.disciplina" paginator :rows="10">
+            <Column field="codigo" header="Código"></Column>
+            <Column field="titulo" header="Titulo"></Column>
+            <Column field="tipo" header="Tipo"></Column>
+            <Column field="periodo" header="Período"></Column>
+            <Column field="carga_horaria" header="Carga Horária"></Column>
+            <Column field="ativo" header="Ativo">
+                <template #body="slotProps">
+                    <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
+                </template>
+            </Column>
+            <Column>
+                <template #body="slotProps">
+                    <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined p-mr-2"
+                            @click="editDisciplina(slotProps.data.id)"></Button>
+                    <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
+                            @click="deleteDisciplina(slotProps.data.id)"></Button>
+                </template>
+            </Column>
+        </DataTable>
+    </div>
 </template>
