@@ -39,8 +39,12 @@ const deleteDisciplina = async () => {
         <h2 class="mb-4 text-2xl font-bold text-center">Listas Disciplinas</h2>
         <DataTable :value="$page.props.disciplina" paginator :rows="10">
             <Column field="codigo" header="Código"></Column>
-            <Column field="titulo" header="Titulo"></Column>
-            <column field="modalidade" header="Modalidade"></column>
+            <Column field="titulo" header="Título"></Column>
+            <Column field="modalidade" header="Modalidade">
+                <template #body="slotProps">
+                    {{ slotProps.data.modalidade ? slotProps.data.modalidade : 'Nenhuma modalidade' }}
+                </template>
+            </Column>
             <Column field="tipo" header="Tipo"></Column>
             <Column field="periodo" header="Período"></Column>
             <Column field="carga_horaria" header="Carga Horária"></Column>
@@ -74,6 +78,6 @@ const deleteDisciplina = async () => {
 .button-group {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem; /* Adiciona um espaço entre os botões */
+    gap: 0.5rem;
 }
 </style>
