@@ -1,7 +1,9 @@
 <script setup>
+import {ref} from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
 import {usePage} from '@inertiajs/vue3';
 import {useRouter} from 'vue-router';
 import axios from 'axios';
@@ -9,13 +11,22 @@ import axios from 'axios';
 const page = usePage();
 const disciplina = page.props.disciplina;
 const router = useRouter();
+const displayConfirmation = ref(false);
+const selectedDisciplinaId = ref(null);
+
 const editDisciplina = (id) => {
     router.push({name: 'disciplina.edit', params: {id: id}});
 };
 
-const deleteDisciplina = async (id) => {
+const confirmDeleteDisciplina = (id) => {
+    selectedDisciplinaId.value = id;
+    displayConfirmation.value = true;
+};
+
+const deleteDisciplina = async () => {
     try {
-        await axios.delete(route('disciplina.destroy', id));
+        await axios.delete(route('disciplina.destroy', selectedDisciplinaId.value));
+        displayConfirmation.value = false;
         router.go();
     } catch (error) {
         console.error(error);
@@ -42,9 +53,26 @@ const deleteDisciplina = async (id) => {
                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined p-mr-2"
                             @click="editDisciplina(slotProps.data.id)"></Button>
                     <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
-                            @click="deleteDisciplina(slotProps.data.id)"></Button>
+                            @click="confirmDeleteDisciplina(slotProps.data.id)"></Button>
                 </template>
             </Column>
         </DataTable>
+
+        <Dialog header="Confirmação" v-model:visible="displayConfirmation" :closable="false" :modal="true"
+                class="p-fluid">
+            <p>Tem certeza que deseja excluir esta disciplina?</p>
+            <div class="button-group my-2">
+                <Button label="Não" icon="pi pi-times" class="p-button-text" @click="displayConfirmation = false"/>
+                <Button label="Sim" icon="pi pi-check" class="p-button-text p-button-danger" @click="deleteDisciplina"/>
+            </div>
+        </Dialog>
     </div>
 </template>
+
+<style>
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem; /* Adiciona um espaço entre os botões */
+}
+</style>
