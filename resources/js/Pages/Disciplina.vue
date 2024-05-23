@@ -27,7 +27,7 @@ const deleteDisciplina = async () => {
     try {
         await axios.delete(route('disciplina.destroy', selectedDisciplinaId.value));
         displayConfirmation.value = false;
-        router.go();
+        window.location.reload();  // Reload the entire page
     } catch (error) {
         console.error(error);
     }
