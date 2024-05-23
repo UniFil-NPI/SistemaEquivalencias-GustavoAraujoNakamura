@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('periodo');
             $table->string('carga_horaria');
             $table->boolean('ativo')->default(true);
+            $table->string('modalidade');
         });
     }
 
