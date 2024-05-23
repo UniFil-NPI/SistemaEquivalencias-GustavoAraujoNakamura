@@ -28,24 +28,6 @@ export default {
                 ativo: !!disciplina.ativo,
             }));
         },
-        // async salvarDisciplina() {
-        //     if (this.disciplinaAtual.id) {
-        //         await this.atualizarDisciplina();
-        //     } else {
-        //         await this.criarDisciplina();
-        //     }
-        //     this.disciplinaAtual = {codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: false};
-        // },
-        // async criarDisciplina() {
-        //     await fetch(route('disciplina.store'), {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(this.disciplinaAtual),
-        //     });
-        //     await this.carregarDisciplinas();
-        // },
         async atualizarDisciplina() {
             await fetch(route('disciplina.edit', this.disciplinaAtual.id), {
                 method: 'PUT',
@@ -94,8 +76,8 @@ export default {
                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="tipo" name="tipo" required>
                         <option value="">Tipo da disciplina</option>
-                        <option value="Core" :selected="disciplinaAtual.tipo === 'Core'">Core</option>
-                        <option value="Flex" :selected="disciplinaAtual.tipo === 'Flex'">Flex</option>
+                        <option value="Core">Core</option>
+                        <option value="Flex">Flex</option>
                     </select>
                 </div>
                 <div class="w-full md:w-1/2 px-6">
@@ -118,10 +100,10 @@ export default {
                            id="carga_horaria" name="carga_horaria" type="number" placeholder="Carga horária" required>
                 </div>
                 <div class="w-full px-6 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" id="ativo"
-                           name="ativo" for="ativo">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="ativo">
                         Disciplina ativa
                     </label>
+                    <input type="hidden" name="ativo" :value="disciplinaAtual.ativo ? '1' : '0'">
                     <input type="checkbox" id="ativo" v-model="disciplinaAtual.ativo"
                            class="form-checkbox h-5 w-5 text-orange-600">
                 </div>
