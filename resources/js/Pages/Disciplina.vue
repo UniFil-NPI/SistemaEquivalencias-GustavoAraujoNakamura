@@ -25,7 +25,7 @@ const deleteDisciplina = async (id) => {
 
 <template>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
-        <h2 class="mb-4 text-2xl font-bold text-center">Todas Disciplinas</h2>
+        <h2 class="mb-4 text-2xl font-bold text-center">Listas Disciplinas</h2>
         <DataTable :value="$page.props.disciplina" paginator :rows="10">
             <Column field="codigo" header="Código"></Column>
             <Column field="titulo" header="Titulo"></Column>
