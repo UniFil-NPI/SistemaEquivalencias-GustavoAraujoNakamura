@@ -40,6 +40,7 @@ const deleteDisciplina = async () => {
         <DataTable :value="$page.props.disciplina" paginator :rows="10">
             <Column field="codigo" header="Código"></Column>
             <Column field="titulo" header="Titulo"></Column>
+            <column field="modalidade" header="Modalidade"></column>
             <Column field="tipo" header="Tipo"></Column>
             <Column field="periodo" header="Período"></Column>
             <Column field="carga_horaria" header="Carga Horária"></Column>
