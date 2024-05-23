@@ -38,6 +38,9 @@ export default {
             });
             await this.carregarDisciplinas();
         },
+        voltar() {
+            window.location.href = '/disciplina';
+        }
     },
 };
 </script>
@@ -45,6 +48,15 @@ export default {
 <template>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
         <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Disciplina' : 'Criar Disciplina' }}</h2>
+        <div class="flex items-center justify-between">
+            <button
+                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+                @click="voltar">
+                Voltar
+            </button>
+        </div>
+
         <form class="space-y-4" method="post"
               :action="isEditing ? '/disciplina/' + disciplinaAtual.id : '/disciplina'">
             <input type="hidden" name="_method" :value="isEditing ? 'patch' : 'post' ">
