@@ -22,7 +22,6 @@ class DisciplinaController extends Controller
 
     public function edit($id)
     {
-//        dd('deupau');
         $disciplina = Disciplina::find($id);
         return Inertia::render('DisciplinaEdit', [
             'disciplina' => $disciplina
