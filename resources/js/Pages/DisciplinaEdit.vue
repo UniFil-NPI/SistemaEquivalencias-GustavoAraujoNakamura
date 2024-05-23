@@ -16,7 +16,7 @@ export default {
     },
     data() {
         return {
-            disciplina: {id: '', codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: ''},
+            disciplina: {id: '', codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: '', modalidade: ''},
         };
     },
     async mounted() {
