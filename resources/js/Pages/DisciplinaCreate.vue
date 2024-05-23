@@ -120,7 +120,7 @@ export default {
                 <div class="w-full px-6 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" id="ativo"
                            name="ativo" for="ativo">
-                        Disciplina disponível
+                        Disciplina ativa
                     </label>
                     <input type="checkbox" id="ativo" v-model="disciplinaAtual.ativo"
                            class="form-checkbox h-5 w-5 text-orange-600">
