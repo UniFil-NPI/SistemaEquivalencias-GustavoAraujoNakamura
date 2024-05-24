@@ -35,6 +35,11 @@ const deleteDisciplina = async () => {
     <AuthenticatedLayout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">Listas Disciplinas</h2>
+            <div class="flex justify-end mb-4">
+                <a href="/disciplina/create" class="p-button p-button-secondary" style="color: white;">
+                    Criar Nova Disciplina
+                </a>
+            </div>
             <DataTable :value="disciplina" paginator :rows="10">
                 <Column field="codigo" header="Código"></Column>
                 <Column field="titulo" header="Título"></Column>
