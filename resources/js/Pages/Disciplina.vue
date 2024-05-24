@@ -1,11 +1,11 @@
 <script setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
-import {usePage} from '@inertiajs/vue3';
-import {useRouter} from 'vue-router';
+import { usePage } from '@inertiajs/vue3';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const page = usePage();
@@ -13,10 +13,6 @@ const disciplina = page.props.disciplina;
 const router = useRouter();
 const displayConfirmation = ref(false);
 const selectedDisciplinaId = ref(null);
-
-const editDisciplina = (id) => {
-    router.push({name: 'disciplina.edit', params: {id: id}});
-};
 
 const confirmDeleteDisciplina = (id) => {
     selectedDisciplinaId.value = id;
@@ -37,7 +33,7 @@ const deleteDisciplina = async () => {
 <template>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
         <h2 class="mb-4 text-2xl font-bold text-center">Listas Disciplinas</h2>
-        <DataTable :value="$page.props.disciplina" paginator :rows="10">
+        <DataTable :value="disciplina" paginator :rows="10">
             <Column field="codigo" header="Código"></Column>
             <Column field="titulo" header="Título"></Column>
             <Column field="modalidade" header="Modalidade">
@@ -55,8 +51,9 @@ const deleteDisciplina = async () => {
             </Column>
             <Column>
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined p-mr-2"
-                            @click="editDisciplina(slotProps.data.id)"></Button>
+                    <a :href="route('disciplina.edit', slotProps.data.id)">
+                        <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined p-mr-2"></Button>
+                    </a>
                     <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
                             @click="confirmDeleteDisciplina(slotProps.data.id)"></Button>
                 </template>
