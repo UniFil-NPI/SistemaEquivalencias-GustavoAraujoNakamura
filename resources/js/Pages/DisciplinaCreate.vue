@@ -6,7 +6,7 @@ export default {
     props: {
         disciplina: {
             type: Object,
-            default: () => ({codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: '', ativo: false}),
+            default: () => ({codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: '', ativo: false, modalidade: '', uc: false}),
         },
         isEditing: {
             type: Boolean,
