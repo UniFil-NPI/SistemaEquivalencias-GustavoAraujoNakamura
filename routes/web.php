@@ -30,4 +30,6 @@ Route::get('/disciplina/{id}', [DisciplinaController::class, 'show'])->name('dis
 Route::patch('/disciplina/{id}', [DisciplinaController::class, 'update'])->name('disciplina.update');
 Route::delete('/disciplina/{disciplina}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
 Route::put('/disciplina/{id}', [DisciplinaController::class, 'update'])->name('disciplina.update');
+// preciso fazer route index
+ Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
 require __DIR__.'/auth.php';
