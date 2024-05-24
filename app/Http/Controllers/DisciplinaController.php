@@ -22,7 +22,7 @@ class DisciplinaController extends Controller
 
     public function edit($id)
     {
-        $disciplina = Disciplina::find($id);
+        $disciplina = Disciplina::findOrFail($id); // Use findOrFail para lançar uma exceção se o ID não for encontrado
         return Inertia::render('DisciplinaEdit', [
             'disciplina' => $disciplina
         ]);
