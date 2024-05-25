@@ -34,9 +34,10 @@ const deleteDisciplina = async () => {
 <template>
     <AuthenticatedLayout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
-            <h2 class="mb-4 text-2xl font-bold text-center">Listas Disciplinas</h2>
+            <h2 class="mb-4 text-2xl font-bold text-center">Lista de disciplinas</h2>
             <div class="flex justify-end mb-4">
                 <a href="/disciplina/create" class="p-button p-button-secondary" style="color: white;">
+                    <i class="pi pi-plus" style="margin-right: 0.5rem;"></i>
                     Criar Nova Disciplina
                 </a>
             </div>
