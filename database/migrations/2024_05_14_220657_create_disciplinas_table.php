@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('disciplinas', function (Blueprint $table) {
             $table->timestamps();
             $table->id();
-            $table->string('codigo');
+            $table->string('codigo')->unique();
             $table->string('titulo');
             $table->string('tipo');
             $table->string('periodo');
             $table->string('carga_horaria');
             $table->boolean('ativo')->default(true);
             $table->string('modalidade')->nullable();
+            $table->softDeletes();
         });
     }
 
