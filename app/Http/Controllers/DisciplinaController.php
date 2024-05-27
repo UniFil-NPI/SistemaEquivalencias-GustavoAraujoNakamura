@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Disciplina;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class DisciplinaController extends Controller
@@ -36,6 +37,16 @@ class DisciplinaController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'codigo' => 'required|unique:disciplinas',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('disciplina/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $disciplina = Disciplina::create($request->all());
         $disciplina = $disciplina->save();
 
