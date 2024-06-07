@@ -11,20 +11,20 @@ class DisciplinaController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Disciplina', [
+        return Inertia::render('Disciplina/Disciplina', [
             'disciplina' => Disciplina::all()
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('DisciplinaCreate');
+        return Inertia::render('Disciplina/DisciplinaCreate');
     }
 
     public function edit($id)
     {
         $disciplina = Disciplina::findOrFail($id);
-        return Inertia::render('DisciplinaEdit', [
+        return Inertia::render('Disciplina/DisciplinaEdit', [
             'disciplina' => $disciplina
         ]);
     }
