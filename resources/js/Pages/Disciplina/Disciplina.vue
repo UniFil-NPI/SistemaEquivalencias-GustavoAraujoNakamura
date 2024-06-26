@@ -8,6 +8,10 @@ import {usePage} from '@inertiajs/vue3';
 import {useRouter} from 'vue-router';
 import axios from 'axios';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { useToast } from 'primevue/usetoast';
+import Toast from 'primevue/toast';
+
+const toast = useToast();
 
 const page = usePage();
 const disciplina = page.props.disciplina;
@@ -29,9 +33,13 @@ const deleteDisciplina = async () => {
         console.error(error);
     }
 };
+// function teste() {
+//     toast.add({severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000});
+// }
 </script>
 
 <template>
+    <Toast></Toast>
     <AuthenticatedLayout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">Lista de disciplinas</h2>
