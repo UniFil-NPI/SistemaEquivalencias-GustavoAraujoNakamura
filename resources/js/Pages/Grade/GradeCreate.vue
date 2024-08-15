@@ -1,3 +1,58 @@
+<script>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import axios from 'axios';
+import { usePage } from '@inertiajs/vue3';
+
+export default {
+    components: {
+        AuthenticatedLayout,
+    },
+    props: {
+        grade: {
+            type: Object,
+            default: () => ({ id: '', titulo: '', id_disciplina: '', ch: '', periodo: '', ativo: false }),
+        },
+        isEditing: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    async mounted() {
+        if (this.isEditing && this.grade.id) {
+            await this.carregarGrade();
+        }
+    },
+    methods: {
+        async carregarGrade() {
+            try {
+                const response = await axios.get(route('grade.show', this.grade.id));
+                // Atualiza a prop grade com os dados carregados
+                this.$emit('update:grade', response.data);
+            } catch (error) {
+                console.error('Erro ao carregar a grade:', error);
+            }
+        },
+        async salvarGrade() {
+            try {
+                const url = this.isEditing ? route('grade.update', this.grade.id) : route('grade.store');
+                const method = this.isEditing ? 'put' : 'post';
+                const csrfToken = usePage().props.csrf_token;
+
+                await axios[method](url, {
+                    ...this.grade,
+                    _token: csrfToken,
+                });
+
+                // Redireciona para a página de listagem de grades após salvar
+                window.location.href = '/grade';
+            } catch (error) {
+                console.error('Erro ao salvar a grade:', error);
+            }
+        },
+    },
+};
+</script>
+
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
@@ -55,58 +110,3 @@
         </div>
     </authenticated-layout>
 </template>
-
-<script>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
-
-export default {
-    components: {
-        AuthenticatedLayout,
-    },
-    props: {
-        grade: {
-            type: Object,
-            default: () => ({ id: '', titulo: '', id_disciplina: '', ch: '', periodo: '', ativo: false }),
-        },
-        isEditing: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    async mounted() {
-        if (this.isEditing && this.grade.id) {
-            await this.carregarGrade();
-        }
-    },
-    methods: {
-        async carregarGrade() {
-            try {
-                const response = await axios.get(route('grade.show', this.grade.id));
-                // Atualiza a prop grade com os dados carregados
-                this.$emit('update:grade', response.data);
-            } catch (error) {
-                console.error('Erro ao carregar a grade:', error);
-            }
-        },
-        async salvarGrade() {
-            try {
-                const url = this.isEditing ? route('grade.update', this.grade.id) : route('grade.store');
-                const method = this.isEditing ? 'put' : 'post';
-                const csrfToken = usePage().props.csrf_token;
-
-                await axios[method](url, {
-                    ...this.grade,
-                    _token: csrfToken,
-                });
-
-                // Redireciona para a página de listagem de grades após salvar
-                window.location.href = '/grade';
-            } catch (error) {
-                console.error('Erro ao salvar a grade:', error);
-            }
-        },
-    },
-};
-</script>
