@@ -27,7 +27,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
 Route::resource('/disciplina', DisciplinaController::class);
 //Route::get('/disciplina/{id}', [DisciplinaController::class, 'show'])->name('disciplina.show');
 //Route::patch('/disciplina/{id}', [DisciplinaController::class, 'update'])->name('disciplina.update');
@@ -38,6 +37,5 @@ Route::resource('/disciplina', DisciplinaController::class);
 //Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
 Route::resource('/grade', GradeController::class);
 Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
-
-
-
+Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');
+Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.update');
