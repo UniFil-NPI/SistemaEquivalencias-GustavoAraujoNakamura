@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Grade extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['titulo'];
+    protected $fillable = ['titulo',
+                          'id_disciplina',
+                          'ch',
+                          'periodo',
+                          'ativo'
+    ];
 }
