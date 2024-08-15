@@ -12,19 +12,19 @@ class GradeController extends Controller
     public function index()
     {
         return Inertia::render('Grade/Grade', [
-            'grades' => Grade::all(),
+            'grade' => Grade::all(),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Grade/Create');
+        return Inertia::render('Grade/GradeCreate');
     }
 
     public function edit($id)
     {
         $grade = Grade::findOrFail($id);
-        return Inertia::render('Grade/Edit', [
+        return Inertia::render('Grade/GradeEdit', [
             'grade' => $grade,
         ]);
     }
