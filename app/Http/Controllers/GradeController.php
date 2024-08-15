@@ -2,124 +2,76 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GradesRequest;
-use App\Models\Disciplinas;
-use App\Models\DisciplinasGrades;
+use App\Models\Grade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use App\Models\Grades;
-use Illuminate\Support\Facades\DB;
-use Throwable;
 
-class GradesController extends Controller
+class GradeController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Grades/Index', [
-            'grades' => Grades::all(),
+        return Inertia::render('Grade/Grade', [
+            'grades' => Grade::all(),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Grades/GradesCreate', [
-//            'disciplinas' => Disciplinas::all(),
-//            'grades' => Grades::all(),
-//            'csrf_token' => csrf_token()
+        return Inertia::render('Grade/Create');
+    }
+
+    public function edit($id)
+    {
+        $grade = Grade::findOrFail($id);
+        return Inertia::render('Grade/Edit', [
+            'grade' => $grade,
         ]);
     }
 
-    public function store(GradesRequest $request)
+    public function show($id)
     {
-        try {
-            DB::beginTransaction();
-
-            $grade = Grades::create($request->validated());
-
-            $disciplinas = explode(',', $request->disciplinas);
-
-            foreach ($disciplinas as $disciplina) {
-                if ($disciplina != '') {
-                    DisciplinasGrades::create([
-                        'disciplinas_id' => $disciplina,
-                        'grades_id' => $grade->id
-                    ]);
-                }
-            }
-
-            DB::commit();
-            return response()->json(['success' => 'Grade adicionada com sucesso!'], 201);
-        } catch (Throwable $th) {
-            DB::rollBack();
-            return response()->json(['error' => 'Erro ao adicionar grade! ' . $th], 500);
-        }
+        $grade = Grade::findOrFail($id);
+        return response()->json($grade);
     }
 
-    public function show(string $id)
+    public function store(Request $request)
     {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        return Inertia::render('Grades/Edit', [
-            'disciplinas' => Disciplinas::all(),
-            'grade' => Grades::with('disciplinas')->find($id),
-            'csrf_token' => csrf_token()
+        $validator = Validator::make($request->all(), [
+            'titulo' => 'required|unique:grades|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('grade.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        Grade::create($request->all());
+
+        return redirect()->route('grade.index');
     }
 
-    public function update(GradesRequest $request, string $id)
+    public function update(Request $request, Grade $grade)
     {
-        try {
-            DB::beginTransaction();
+        $validator = Validator::make($request->all(), [
+            'titulo' => 'required|unique:grades,titulo,' . $grade->id . '|max:255',
+        ]);
 
-            $grade = Grades::find($id);
-            $grade->update($request->validated());
-
-            //remover disciplinas grades antigas
-            $disciplinas_grades = DisciplinasGrades::where('grades_id', $id)->get();
-            foreach ($disciplinas_grades as $dg) {
-                $dg->delete();
-            }
-
-            //adicionar novas disciplinas grades
-            $disciplinas = explode(',', $request->disciplinas);
-            foreach ($disciplinas as $disciplina) {
-                if ($disciplina != '') {
-                    DisciplinasGrades::firstOrCreate([
-                        'disciplinas_id' => $disciplina,
-                        'grades_id' => $grade->id
-                    ]);
-                }
-            }
-
-            DB::commit();
-            return response()->json(['success' => 'Grade atualizada com sucesso!'], 201);
-        } catch (Throwable $th) {
-            DB::rollBack();
-            return response()->json(['error' => 'Erro ao atualizar a grade! '], 500);
+        if ($validator->fails()) {
+            return redirect()->route('grade.edit', $grade->id)
+                ->withErrors($validator)
+                ->withInput();
         }
+
+        $grade->update($request->all());
+
+        return redirect()->route('grade.index');
     }
 
-    public function destroy(string $id)
+    public function destroy(Grade $grade)
     {
-        try {
-            DB::beginTransaction();
-
-            $disciplinas_grades = DisciplinasGrades::where('grades_id', $id)->get();
-
-            foreach ($disciplinas_grades as $dg) {
-                $dg->delete();
-            }
-
-            Grades::find($id)->delete();
-
-            DB::commit();
-            return response()->json(['success' => 'Grade removida com sucesso!'], 200);
-        } catch (Throwable $th) {
-            DB::rollBack();
-            return response()->json(['error' => 'Erro ao remover grade! ' . $th], 500);
-        }
+        $grade->delete();
+        return response()->json(['message' => 'Grade deletada com sucesso']);
     }
 }
