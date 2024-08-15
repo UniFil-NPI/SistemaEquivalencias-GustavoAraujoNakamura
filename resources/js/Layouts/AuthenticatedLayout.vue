@@ -41,9 +41,11 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                             </div>
 
-<!--                            <NavLink :href="route('grades.index')" :active="route().current('grades.index')">-->
-<!--                                Grades-->
-<!--                            </NavLink>-->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('grades.index')" :active="route().current('grades.index')">
+                                    Grades
+                                </NavLink>
+                            </div>
 
 <!--                            <NavLink :href="route('equivalencias.index')"-->
 <!--                                     :active="route().current('equivalencias.index')">-->
