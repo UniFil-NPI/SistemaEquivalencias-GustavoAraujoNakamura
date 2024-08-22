@@ -39,3 +39,8 @@ Route::resource('/grade', GradeController::class);
 Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
 Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');
 Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.update');
+
+Route::resource('/curso', CursoController::class);
+Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
+Route::get('/curso/create', [CursoController::class, 'create'])->name('curso.create');
+Route::put('/curso/{id}', [CursoController::class, 'update'])->name('curso.update');
