@@ -1,74 +1,75 @@
-<script>
+<script setup>
+import { ref, onMounted, watch } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import MultiSelect from 'primevue/multiselect';
 import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, useForm } from '@inertiajs/vue3';
 
-export default {
-    components: {
-        AuthenticatedLayout,
+const props = defineProps({
+    grade: {
+        type: Object,
+        default: () => ({id: '', titulo: '', id_disciplina: '', ch: '', periodo: '', ativo: false}),
     },
-    props: {
-        grade: {
-            type: Object,
-            default: () => ({id: '', titulo: '', id_disciplina: '', ch: '', periodo: '', ativo: false}),
-        },
-        isEditing: {
-            type: Boolean,
-            default: false,
-        },
+    disciplinas: {
+        type: Array,
+        default: () => [],
     },
-    data() {
-        return {
-            isIdDisciplinaEnabled: false,
-        };
+    isEditing: {
+        type: Boolean,
+        default: false,
     },
-    async mounted() {
-        if (this.isEditing && this.grade.id) {
-            await this.carregarGrade();
-        }
+});
 
-        // Função para verificar o valor de CH e habilitar id_disciplina
-        this.verificarCH();
-    },
-    methods: {
-        verificarCH() {
-            const chInput = document.getElementById('ch');
-            const idDisciplinaInput = document.getElementById('id_disciplina');
+const grade = ref({ ...props.grade });
+const isIdDisciplinaEnabled = ref(false);
+const selectedDisciplinas = ref([]);
+const disciplinas = ref(props.disciplinas);
+const isEditing = ref(props.isEditing);
 
-            // Adiciona um event listener no campo ch para habilitar id_disciplina
-            chInput.addEventListener('input', function () {
-                if (chInput.value > 0) {
-                    idDisciplinaInput.disabled = false;
-                } else {
-                    idDisciplinaInput.disabled = true;
-                }
-            });
-        },
-        async carregarGrade() {
-            try {
-                const response = await axios.get(route('grade.show', this.grade.id));
-                this.$emit('update:grade', response.data);
-            } catch (error) {
-                console.error('Erro ao carregar a grade:', error);
-            }
-        },
-        async salvarGrade() {
-            try {
-                const url = this.isEditing ? route('grade.update', this.grade.id) : route('grade.store');
-                const method = this.isEditing ? 'put' : 'post';
-                const csrfToken = usePage().props.csrf_token;
+onMounted(async () => {
+    if (isEditing.value && grade.value.id) {
+        await carregarGrade();
+    }
 
-                await axios[method](url, {
-                    ...this.grade,
-                    _token: csrfToken,
-                });
+    verificarCH();
 
-                window.location.href = '/grade';
-            } catch (error) {
-                console.error('Erro ao salvar a grade:', error);
-            }
-        },
-    },
+    console.log('Disciplinas:', disciplinas.value);
+    console.log('Selected Disciplinas:', selectedDisciplinas.value);
+});
+
+const verificarCH = () => {
+    const chInput = document.getElementById('ch');
+    const idDisciplinaInput = document.getElementById('id_disciplina');
+
+    chInput.addEventListener('input', () => {
+        idDisciplinaInput.disabled = chInput.value <= 0;
+    });
+};
+
+const carregarGrade = async () => {
+    try {
+        const response = await axios.get(route('grade.show', grade.value.id));
+        grade.value = response.data;
+    } catch (error) {
+        console.error('Erro ao carregar a grade:', error);
+    }
+};
+
+const salvarGrade = async () => {
+    try {
+        const url = isEditing.value ? route('grade.update', grade.value.id) : route('grade.store');
+        const method = isEditing.value ? 'put' : 'post';
+        const csrfToken = usePage().props.csrf_token;
+
+        await axios[method](url, {
+            ...grade.value,
+            _token: csrfToken,
+        });
+
+        window.location.href = '/grade';
+    } catch (error) {
+        console.error('Erro ao salvar a grade:', error);
+    }
 };
 </script>
 
@@ -93,10 +94,7 @@ export default {
 
                 <div>
                     <label class="block text-sm font-bold mb-2" for="id_disciplina">ID da Disciplina</label>
-                    <input v-model.number="grade.id_disciplina"
-                           id="id_disciplina"
-                           class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
-                           name="id_disciplina" type="number" placeholder="ID da Disciplina" disabled required>
+                    <MultiSelect v-model="selectedDisciplinas" :options="disciplinas" optionLabel="titulo" filter placeholder="Disciplinas" class="w-full md:w-20rem" />
                 </div>
 
                 <div>

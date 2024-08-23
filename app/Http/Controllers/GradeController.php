@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disciplina;
 use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,9 @@ class GradeController extends Controller
 
     public function create()
     {
-        return Inertia::render('Grade/GradeCreate');
+
+        return Inertia::render('Grade/GradeCreate', [
+            'disciplinas' => Disciplina::all()]);
     }
 
     public function edit($id)

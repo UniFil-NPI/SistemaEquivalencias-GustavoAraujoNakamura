@@ -10,6 +10,7 @@ import 'primevue/resources/primevue.min.css'; // core css
 import 'primeicons/primeicons.css'; // ícones
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
+import MultiSelect  from "primevue/multiselect";
 // import Vue from 'vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -22,6 +23,7 @@ createInertiaApp({
             .use(plugin)
             .use(ToastService)
             .use(PrimeVue)
+            .use(MultiSelect)
             .use(ZiggyVue)
             .mount(el);
     },
