@@ -38,12 +38,16 @@ Route::resource('/disciplina', DisciplinaController::class);
 //Route::post('/disciplina', [DisciplinaController::class, 'store'])->name('disciplina.store');
 //Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
 Route::resource('/grade', GradeController::class);
-//Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
-//Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');
-//Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.update');
+Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
+Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');
+Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.update');
 
 Route::resource('/curso', CursoController::class);
-//Route::get('/curso', [CursoController::class, 'index'])->name('curso.index');
-//Route::resource('curso', CursoController::class);
-//Route::get('/curso', [CursoController::class, 'index'])->name('curso.index');
-//Route::resource('/cursos', CursoController::class);
+//Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
+//Route::get('/curso/create', [CursoController::class, 'create'])->name('curso.create');
+//Route::put('/curso/{id}', [CursoController::class, 'update'])->name('curso.update');
+//Route::get('/curso/{id}', [CursoController::class, 'show'])->name('curso.show');
+//Route::delete('/curso/{id}', [CursoController::class, 'destroy'])->name('curso.destroy');
+//Route::get('/curso/{id}/edit', [CursoController::class, 'edit'])->name('curso.edit');
+//Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
+
