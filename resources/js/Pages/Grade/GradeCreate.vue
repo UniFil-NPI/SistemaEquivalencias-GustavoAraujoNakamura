@@ -99,8 +99,16 @@ const salvarGrade = async () => {
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold mb-2" for="id_disciplina">ID da Disciplina</label>
-                    <MultiSelect v-model="selectedDisciplinas" :options="disciplinas" optionLabel="titulo" filter placeholder="Disciplinas" class="w-full md:w-20rem" />
+                    <label class="block text-sm font-bold mb-2" for="id_disciplina">Disciplinas</label>
+                    <MultiSelect
+                        v-model="selectedDisciplinas"
+                        :options="disciplinas"
+                        optionLabel="titulo"
+                        optionValue="id"
+                    filter
+                    placeholder="Disciplinas"
+                    class="w-full md:w-20rem"
+                    />
                 </div>
 
                 <div>
