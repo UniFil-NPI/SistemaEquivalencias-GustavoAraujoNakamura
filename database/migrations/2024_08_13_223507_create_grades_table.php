@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('titulo');
-            $table->unsignedBigInteger('id_disciplina');
-            $table->foreign('id_disciplina')->references('id')->on('disciplinas');
+            $table->foreignId('id_disciplina')->nullable()->references('id')->on('disciplinas');
             $table->integer('ch');
             $table->integer('periodo');
             $table->boolean('ativo')->default(true);
