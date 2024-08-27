@@ -7,6 +7,8 @@ import CursoCreate from './CursoCreate.vue';
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
 
+const page = usePage();
+
 export default {
     components: {
         CursoCreate,

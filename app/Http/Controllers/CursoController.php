@@ -31,7 +31,7 @@ class CursoController extends Controller
 
     public function show($id)
     {
-        $curso = Curso::findOrFail($id); // Usar findOrFail para garantir que o curso seja encontrado
+        $curso = Curso::findOrFail($id);
         return response()->json($curso);
     }
 
@@ -56,20 +56,7 @@ class CursoController extends Controller
 
     public function update(Request $request, Curso $curso)
     {
-        $validator = Validator::make($request->all(), [
-            'titulo' => 'required|unique:cursos,titulo,' . $curso->id . '|max:255',
-            'ano' => 'required|numeric',
-            // Adicione outras validações conforme necessário
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('curso.edit', $curso->id)
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $curso->update($request->all());
-
         return redirect()->route('curso.index');
     }
 
