@@ -18,6 +18,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    selectedDisciplinas: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const grade = ref({ ...props.grade });
@@ -33,8 +37,9 @@ onMounted(async () => {
 
     verificarCH();
 
-    console.log('Disciplinas:', disciplinas.value);
-    console.log('Selected Disciplinas:', selectedDisciplinas.value);
+    selectedDisciplinas.value = props.selectedDisciplinas;
+
+    console.log('ssss   :', props.selectedDisciplinas);
 });
 
 const verificarCH = () => {
@@ -58,11 +63,12 @@ const carregarGrade = async () => {
 const salvarGrade = async () => {
     try {
         const url = isEditing.value ? route('grade.update', grade.value.id) : route('grade.store');
-        const method = isEditing.value ? 'put' : 'post';
+        const method = isEditing.value ? 'patch' : 'post';
         const csrfToken = usePage().props.csrf_token;
+        const body = {grade:grade.value, disciplinas: selectedDisciplinas.value}
 
         await axios[method](url, {
-            ...grade.value,
+            body,
             _token: csrfToken,
         });
 

@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Grade extends Model
@@ -13,4 +14,9 @@ class Grade extends Model
                           'periodo',
                           'ativo'
     ];
+
+    public function disciplinas(): BelongsToMany
+    {
+        return $this->belongsToMany(Disciplina::class, DisciplinaGrade::class);
+    }
 }
