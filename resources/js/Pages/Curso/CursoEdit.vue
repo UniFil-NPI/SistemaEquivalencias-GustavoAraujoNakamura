@@ -1,7 +1,3 @@
-<template>
-    <CursoCreate :curso="curso" :isEditing="true"/>
-</template>
-
 <script>
 import CursoCreate from './CursoCreate.vue';
 import axios from 'axios';
@@ -34,3 +30,6 @@ export default {
     },
 };
 </script>
+<template>
+    <CursoCreate :curso="curso" :isEditing="true"/>
+</template>
