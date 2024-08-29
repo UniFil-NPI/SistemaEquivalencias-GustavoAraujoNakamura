@@ -43,6 +43,9 @@ Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.cre
 Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.update');
 
 Route::resource('/curso', CursoController::class);
+// routes/web.php
+Route::put('/curso/{curso}', [CursoController::class, 'update'])->name('curso.update');
+Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
 
 //Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
 //Route::get('/curso/create', [CursoController::class, 'create'])->name('curso.create');

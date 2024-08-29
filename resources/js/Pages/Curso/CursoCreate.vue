@@ -25,12 +25,28 @@ export default {
     },
     methods: {
         async salvarCurso() {
-            const url = this.isEditing ? `/curso/${this.cursoAtual.id}` : '/curso';
+            console.log("aaaa");
+
+            const url = this.isEditing ? `/curso/${this.curso.id}` : '/curso';
             const method = this.isEditing ? 'put' : 'post';
 
+            console.log("Dados enviados:", this.cursoAtual);
+            console.log("CSRF Token:", this.csrfToken);
 
-        },
-    },
+            try {
+                await axios[method](url, {
+                    ...this.curso,
+                    _token: this.csrfToken,
+                });
+
+                window.location.href = '/curso';
+            } catch (error) {
+                console.error("Erro ao salvar o curso:", error);
+                console.log("Detalhes do erro:", error.response);
+            }
+        }
+    }
+
 };
 </script>
 <template>
