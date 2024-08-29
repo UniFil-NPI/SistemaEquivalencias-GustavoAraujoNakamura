@@ -1,3 +1,38 @@
+<script>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import axios from 'axios';
+import { usePage } from '@inertiajs/vue3';
+
+export default {
+    components: {
+        AuthenticatedLayout,
+    },
+    props: {
+        curso: {
+            type: Object,
+            default: () => ({ id: '', titulo: '', ano: '', ativo: false }),
+        },
+        isEditing: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    data() {
+        return {
+            cursoAtual: this.curso,
+            csrfToken: usePage().props.csrf_token,
+        };
+    },
+    methods: {
+        async salvarCurso() {
+            const url = this.isEditing ? `/curso/${this.cursoAtual.id}` : '/curso';
+            const method = this.isEditing ? 'put' : 'post';
+
+
+        },
+    },
+};
+</script>
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
@@ -36,49 +71,3 @@
         </div>
     </authenticated-layout>
 </template>
-
-<script>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
-
-export default {
-    components: {
-        AuthenticatedLayout,
-    },
-    props: {
-        curso: {
-            type: Object,
-            default: () => ({ id: '', titulo: '', ano: '', ativo: false }),
-        },
-        isEditing: {
-            type: Boolean,
-            default: false,
-        }
-    },
-    data() {
-        return {
-            cursoAtual: this.curso,
-            csrfToken: usePage().props.csrf_token,
-        };
-    },
-    methods: {
-        async salvarCurso() {
-            const url = this.isEditing ? `/curso/${this.cursoAtual.id}` : '/curso';
-            const method = this.isEditing ? 'put' : 'post';
-
-            try {
-                await axios[method](url, {
-                    ...this.cursoAtual,
-                    _token: this.csrfToken,
-                });
-
-                // Redireciona para a página de listagem após salvar
-                window.location.href = '/curso';
-            } catch (error) {
-                console.error("Erro ao salvar o curso:", error);
-            }
-        },
-    },
-};
-</script>
