@@ -30,28 +30,17 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 Route::resource('/disciplina', DisciplinaController::class);
-//Route::get('/disciplina/{id}', [DisciplinaController::class, 'show'])->name('disciplina.show');
-//Route::patch('/disciplina/{id}', [DisciplinaController::class, 'update'])->name('disciplina.update');
-//Route::delete('/disciplina/{disciplina}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
-//Route::put('/disciplina/{id}', [DisciplinaController::class, 'update'])->name('disciplina.update');
-//Route::post('/disciplina', [DisciplinaController::class, 'create'])->name('disciplina.create');
-//Route::post('/disciplina', [DisciplinaController::class, 'store'])->name('disciplina.store');
-//Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
 Route::resource('/grade', GradeController::class);
+Route::resource('/curso', CursoController::class);
+Route::resource('/equivalencia', EquivalenciaController::class);
+Route::resource('/relatorio', EquivalenciaController::class);
+
 Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
 Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');
 Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.update');
 
-Route::resource('/curso', CursoController::class);
-// routes/web.php
 Route::put('/curso/{curso}', [CursoController::class, 'update'])->name('curso.update');
 Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
 
-//Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
-//Route::get('/curso/create', [CursoController::class, 'create'])->name('curso.create');
-//Route::put('/curso/{id}', [CursoController::class, 'update'])->name('curso.update');
-//Route::get('/curso/{id}', [CursoController::class, 'show'])->name('curso.show');
-//Route::delete('/curso/{id}', [CursoController::class, 'destroy'])->name('curso.destroy');
-//Route::get('/curso/{id}/edit', [CursoController::class, 'edit'])->name('curso.edit');
-//Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
+
 
