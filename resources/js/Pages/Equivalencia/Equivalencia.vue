@@ -28,7 +28,7 @@ const deleteEquivalencia = async () => {
     try {
         await axios.delete(route('equivalencia.destroy', selectedEquivalenciaId.value));
         displayConfirmation.value = false;
-        window.location.reload();  // Reload the entire page
+        window.location.reload();
     } catch (error) {
         console.error(error);
     }
@@ -49,14 +49,9 @@ const deleteEquivalencia = async () => {
             <DataTable :value="equivalencia" paginator :rows="10">
                 <Column field="codigo" header="Código"></Column>
                 <Column field="titulo" header="Título"></Column>
-                <Column field="modalidade" header="Modalidade">
-                    <template #body="slotProps">
-                        {{ slotProps.data.modalidade ? slotProps.data.modalidade : 'Nenhuma modalidade' }}
-                    </template>
-                </Column>
-                <Column field="tipo" header="Tipo"></Column>
-                <Column field="periodo" header="Período"></Column>
-                <Column field="carga_horaria" header="Carga Horária"></Column>
+                <Column field="curso" header="Curso"></Column>
+                <Column field="disciplina" header="Disciplina"></Column>
+                <Column field="estudante" header="Estudante"></Column>
                 <Column field="ativo" header="Ativo">
                     <template #body="slotProps">
                         <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
