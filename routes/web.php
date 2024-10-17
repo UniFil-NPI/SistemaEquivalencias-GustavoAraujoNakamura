@@ -7,7 +7,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CursoController;
-
+use App\Http\Controllers\EquivalenciaController;
+use App\Http\Controllers\RelatorioController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -29,11 +30,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 Route::resource('/disciplina', DisciplinaController::class);
 Route::resource('/grade', GradeController::class);
 Route::resource('/curso', CursoController::class);
 Route::resource('/equivalencia', EquivalenciaController::class);
 Route::resource('/relatorio', EquivalenciaController::class);
+Route::resource('/relatorio', RelatorioController::class);
 
 Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
 Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');
@@ -41,6 +44,3 @@ Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.updat
 
 Route::put('/curso/{curso}', [CursoController::class, 'update'])->name('curso.update');
 Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
-
-
-
