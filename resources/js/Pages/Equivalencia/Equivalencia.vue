@@ -43,20 +43,18 @@ const deleteEquivalencia = async () => {
             <div class="flex justify-end mb-4">
                 <a href="/equivalencia/create" class="p-button p-button-secondary" style="color: white;">
                     <i class="pi pi-plus" style="margin-right: 0.5rem;"></i>
-                    Criar Nova Equivalencia
+                    Criar Nova Equivalência
                 </a>
             </div>
             <DataTable :value="equivalencia" paginator :rows="10">
-                <Column field="codigo" header="Código"></Column>
-                <Column field="titulo" header="Título"></Column>
-                <Column field="curso" header="Curso"></Column>
+                <Column field="titulo" header="Titulo"></Column>
                 <Column field="disciplina" header="Disciplina"></Column>
-                <Column field="estudante" header="Estudante"></Column>
-                <Column field="ativo" header="Ativo">
-                    <template #body="slotProps">
-                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
-                    </template>
-                </Column>
+                <Column field="disciplinas" header="Disciplinas"></Column>
+<!--                <Column field="ativo" header="Ativo">-->
+<!--                    <template #body="slotProps">-->
+<!--                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>-->
+<!--                    </template>-->
+<!--                </Column>-->
                 <Column>
                     <template #body="slotProps">
                         <a :href="route('equivalencia.edit', slotProps.data.id)">
@@ -71,7 +69,7 @@ const deleteEquivalencia = async () => {
 
             <Dialog header="Confirmação" v-model:visible="displayConfirmation" :closable="false" :modal="true"
                     class="p-fluid">
-                <p>Tem certeza que deseja excluir esta equivalencia?</p>
+                <p>Tem certeza que deseja excluir esta Equivalência?</p>
                 <div class="button-group my-2">
                     <Button label="Não" icon="pi pi-times" class="p-button-text" @click="displayConfirmation = false"/>
                     <Button label="Sim" icon="pi pi-check" class="p-button-text p-button-danger"
