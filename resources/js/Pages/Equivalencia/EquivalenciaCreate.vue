@@ -19,21 +19,15 @@ const props = defineProps({
     selectedDisciplinas: {
         type: Array,
         default: () => [],
-    },
-    selectedDisciplinas2: {
-        type: Array,
-        default: () => [],
     }
 });
 
-const selectedDisciplinas2 = ref([]);
 const selectedDisciplinas = ref([]);
 const disciplinas = ref(props.disciplinas);
 const isEditing = ref(props.isEditing);
 
 onMounted(async () => {
     selectedDisciplinas.value = props.selectedDisciplinas;
-    selectedDisciplinas2.value = props.selectedDisciplinas2;
 });
 
 const equivalencias = ref({...props.equivalencia});
@@ -88,7 +82,7 @@ const equivalenciaAtual = ref({...props.equivalencia});
                 <div>
                     <label class="block text-sm font-bold mb-2" for="id_disciplina2">Disciplina 2</label>
                     <MultiSelect
-                        v-model="selectedDisciplinas2"
+                        v-model="selectedDisciplinas"
                         :options="disciplinas"
                         optionLabel="titulo"
                         optionValue="id"
