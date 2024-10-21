@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disciplina;
 use App\Models\Equivalencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,9 @@ class EquivalenciaController extends Controller
 
     public function create()
     {
-        return Inertia::render('Equivalencia/EquivalenciaCreate');
+        return Inertia::render('Equivalencia/EquivalenciaCreate', [
+            'disciplinas' => Disciplina::all()
+        ]);
     }
 
     public function edit($id)
