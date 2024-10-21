@@ -58,7 +58,7 @@ const equivalenciaAtual = ref({...props.equivalencia});
                 <!-- Título -->
                 <div class="w-full px-6">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="titulo">
-                        Título da equivalencia
+                        Título da equivalência
                     </label>
                     <input v-model="equivalenciaAtual.titulo"
                            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -67,14 +67,14 @@ const equivalenciaAtual = ref({...props.equivalencia});
 
                 <!-- Disciplina -->
                 <div>
-                    <label class="block text-sm font-bold mb-2" for="id_disciplina1">Disciplinas</label>
+                    <label class="block text-sm font-bold mb-2" for="id_disciplina1">Disciplina</label>
                     <MultiSelect
                         v-model="selectedDisciplinas"
                         :options="disciplinas"
                         optionLabel="titulo"
                         optionValue="id"
                         filter
-                        placeholder="Disciplinas"
+                        placeholder="Disciplina"
                         class="w-full md:w-20rem"
                     />
                 </div>
