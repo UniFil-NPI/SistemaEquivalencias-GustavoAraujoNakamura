@@ -1,14 +1,14 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+    import { ref, onMounted } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import MultiSelect from 'primevue/multiselect';
 import axios from 'axios';
-import { usePage, useForm } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     grade: {
         type: Object,
-        default: () => ({id: '', titulo: '', id_disciplina: '', ch: '', periodo: '', ativo: false}),
+        default: () => ({id: '', titulo: '', id_disciplina: ''}),
     },
     disciplinas: {
         type: Array,
@@ -21,11 +21,10 @@ const props = defineProps({
     selectedDisciplinas: {
         type: Array,
         default: () => [],
-    },
+    }
 });
 
 const grade = ref({ ...props.grade });
-const isIdDisciplinaEnabled = ref(false);
 const selectedDisciplinas = ref([]);
 const disciplinas = ref(props.disciplinas);
 const isEditing = ref(props.isEditing);
@@ -35,21 +34,8 @@ onMounted(async () => {
         await carregarGrade();
     }
 
-    verificarCH();
-
     selectedDisciplinas.value = props.selectedDisciplinas;
-
-    console.log('ssss   :', props.selectedDisciplinas);
 });
-
-const verificarCH = () => {
-    const chInput = document.getElementById('ch');
-    const idDisciplinaInput = document.getElementById('id_disciplina');
-
-    chInput.addEventListener('input', () => {
-        idDisciplinaInput.disabled = chInput.value <= 0;
-    });
-};
 
 const carregarGrade = async () => {
     try {
@@ -92,36 +78,16 @@ const salvarGrade = async () => {
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold mb-2" for="ch">Carga Horária (CH)</label>
-                    <input v-model.number="grade.ch"
-                           class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
-                           id="ch" name="ch" type="number" placeholder="Carga Horária" required>
-                </div>
-
-                <div>
                     <label class="block text-sm font-bold mb-2" for="id_disciplina">Disciplinas</label>
                     <MultiSelect
                         v-model="selectedDisciplinas"
                         :options="disciplinas"
                         optionLabel="titulo"
                         optionValue="id"
-                    filter
-                    placeholder="Disciplinas"
-                    class="w-full md:w-20rem"
+                        filter
+                        placeholder="Disciplinas"
+                        class="w-full md:w-20rem"
                     />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold mb-2" for="periodo">Período</label>
-                    <input v-model.number="grade.periodo"
-                           class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
-                           id="periodo" name="periodo" type="number" placeholder="Período" required>
-                </div>
-
-                <div class="flex items-center">
-                    <label class="block text-sm font-bold mb-2 mr-2" for="ativo">Grade Ativa</label>
-                    <input type="checkbox" id="ativo" v-model="grade.ativo"
-                           class="form-checkbox h-5 w-5 text-orange-600">
                 </div>
 
                 <div class="flex items-center justify-between">
