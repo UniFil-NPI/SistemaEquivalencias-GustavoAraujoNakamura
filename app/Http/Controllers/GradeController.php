@@ -6,10 +6,8 @@ use App\Models\Disciplina;
 use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use App\Models\DisciplinaGrade;
-
+use Inertia\Response;
 
 class GradeController extends Controller
 {
@@ -20,11 +18,9 @@ class GradeController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
-
-        return Inertia::render('Grade/GradeCreate', [
-            'disciplinas' => Disciplina::all()]);
+        return Inertia::render('Grade/GradeCreate', ['disciplinas' => Disciplina::all()]);
     }
 
     public function edit($id)
@@ -46,37 +42,26 @@ class GradeController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
         $validated = $request->validate([
             'body.grade.titulo' => 'required|string|max:255',
-            'body.grade.ch' => 'required|integer',
-            'body.grade.periodo' => 'required|integer',
-            'body.grade.ativo' => 'required|boolean',
             'body.disciplinas' => 'required|array',
             'body.disciplinas.*' => 'integer|exists:disciplinas,id',
         ]);
 
-        // Begin a transaction to ensure data integrity
         DB::beginTransaction();
 
         try {
-            // Create a new Grade
             $grade = Grade::create([
                 'titulo' => $validated['body']['grade']['titulo'],
-                'ch' => $validated['body']['grade']['ch'],
-                'periodo' => $validated['body']['grade']['periodo'],
-                'ativo' => $validated['body']['grade']['ativo'],
             ]);
 
             $grade->disciplinas()->attach($validated['body']['disciplinas']);
 
-            // Commit the transaction
             DB::commit();
 
             return response()->json(['message' => 'Grade created successfully'], 201);
 
         } catch (\Exception $e) {
-            // Rollback the transaction if something goes wrong
             DB::rollBack();
             return response()->json(['error' => 'Failed to create grade', 'message' => $e->getMessage()], 500);
         }
@@ -84,7 +69,6 @@ class GradeController extends Controller
 
     public function update(Request $request, Grade $grade)
     {
-        // Validate the request
         $validated = $request->validate([
             'body.grade.titulo' => 'required|string|max:255',
             'body.grade.ch' => 'required|integer',
