@@ -35,6 +35,8 @@ Route::resource('/disciplina', DisciplinaController::class);
 Route::resource('/grade', GradeController::class);
 Route::resource('/curso', CursoController::class);
 Route::resource('/equivalencia', EquivalenciaController::class);
+Route::resource('/gerarEquivalencia', RelatorioController::class);
+
 Route::resource('/relatorio', EquivalenciaController::class);
 Route::resource('/relatorio', RelatorioController::class);
 
