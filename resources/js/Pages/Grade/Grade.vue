@@ -51,8 +51,7 @@ const deleteGrade = async () => {
             </div>
             <DataTable :value="grade" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
-                <Column field="ch" header="Carga Horária"></Column>
-                <Column field="periodo" header="Período"></Column>
+                <Column field="disciplina" header="Disciplina"></Column>
                 <Column field="ativo" header="Ativo">
                     <template #body="slotProps">
                         <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
