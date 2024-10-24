@@ -33,8 +33,11 @@ onMounted(async () => {
 const equivalencias = ref({...props.equivalencia});
 const equivalenciaAtual = ref({...props.equivalencia});
 
-</script>
+// Variáveis independentes para cada MultiSelect
+const selectedDisciplina1 = ref([]);
+const selectedDisciplina2 = ref([]);
 
+</script>
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
@@ -69,12 +72,12 @@ const equivalenciaAtual = ref({...props.equivalencia});
                 <div>
                     <label class="block text-sm font-bold mb-2" for="id_disciplina1">Disciplina</label>
                     <MultiSelect
-                        v-model="selectedDisciplinas"
+                        v-model="selectedDisciplina1"
                         :options="disciplinas"
                         optionLabel="titulo"
                         optionValue="id"
                         filter
-                        placeholder="Disciplina"
+                        placeholder="Escolha uma disciplina"
                         class="w-full md:w-20rem"
                     />
                 </div>
@@ -82,12 +85,12 @@ const equivalenciaAtual = ref({...props.equivalencia});
                 <div>
                     <label class="block text-sm font-bold mb-2" for="id_disciplina2">Disciplina 2</label>
                     <MultiSelect
-                        v-model="selectedDisciplinas"
+                        v-model="selectedDisciplina2"
                         :options="disciplinas"
                         optionLabel="titulo"
                         optionValue="id"
                         filter
-                        placeholder="Disciplinas"
+                        placeholder="Escolha as disciplinas equivalentes da disciplina acima"
                         class="w-full md:w-20rem"
                     />
                 </div>
