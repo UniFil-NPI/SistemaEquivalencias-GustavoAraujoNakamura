@@ -2,10 +2,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+import MultiSelect from 'primevue/multiselect';
 
 export default {
     components: {
         AuthenticatedLayout,
+        MultiSelect,
     },
     props: {
         curso: {
@@ -21,34 +24,45 @@ export default {
         return {
             cursoAtual: this.curso,
             csrfToken: usePage().props.csrf_token,
+            grade: [],
+            selectedGrades: [],
         };
     },
     methods: {
         async salvarCurso() {
-            console.log("aaaa");
-
             const url = this.isEditing ? `/curso/${this.curso.id}` : '/curso';
             const method = this.isEditing ? 'put' : 'post';
-
-            console.log("Dados enviados:", this.cursoAtual);
-            console.log("CSRF Token:", this.csrfToken);
 
             try {
                 await axios[method](url, {
                     ...this.curso,
+                    grade: this.selectedGrade,
                     _token: this.csrfToken,
                 });
 
                 window.location.href = '/curso';
             } catch (error) {
                 console.error("Erro ao salvar o curso:", error);
-                console.log("Detalhes do erro:", error.response);
+            }
+        },
+        async carregarGrades() {
+            try {
+                const response = await axios.get('/api/grade');
+                this.grade = response.data;
+            } catch (error) {
+                console.error("Erro ao carregar as grade:", error);
             }
         }
-    }
+    },
+    async mounted() {
+        await this.carregarGrades();
+    },
+
+
 
 };
 </script>
+
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
@@ -68,6 +82,19 @@ export default {
                     <input v-model.number="curso.ano"
                            class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
                            id="ano" name="ano" type="number" placeholder="Ano do Curso" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-2" for="grade">Grades</label>
+                    <MultiSelect
+                        v-model="selectedGrades"
+                        :options="grade"
+                        optionLabel="titulo"
+                        optionValue="id"
+                        filter
+                        placeholder="Escolha as grades"
+                        class="w-full md:w-20rem"
+                    />
                 </div>
 
                 <div>
