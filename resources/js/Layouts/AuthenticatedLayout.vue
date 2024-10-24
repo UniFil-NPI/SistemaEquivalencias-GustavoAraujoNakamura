@@ -54,14 +54,14 @@ const showingNavigationDropdown = ref(false);
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('GerarEquivalencia.index')" :active="route().current('GerarEquivalencia.index')">
-                                    Gerar Equivalências
+                                <NavLink :href="route('equivalencia.index')" :active="route().current('equivalencia.index')">
+                                    Definir Equivalências
                                 </NavLink>
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('equivalencia.index')" :active="route().current('equivalencia.index')">
-                                    Definir Equivalências
+                                <NavLink :href="route('gerarEquivalencia.index')" :active="route().current('gerarEquivalencia.index')">
+                                    Gerar Equivalências
                                 </NavLink>
                             </div>
 
