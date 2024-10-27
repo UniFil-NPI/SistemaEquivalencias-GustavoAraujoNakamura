@@ -41,7 +41,7 @@ const deleteGrade = async () => {
 <template>
     <Toast></Toast>
     <AuthenticatedLayout>
-        <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
+        <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">Lista de Grade</h2>
             <div class="flex justify-end mb-4">
                 <a href="/grade/create" class="p-button p-button-secondary" style="color: white;">
@@ -51,7 +51,7 @@ const deleteGrade = async () => {
             </div>
             <DataTable :value="grade" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
-                <Column field="disciplina" header="Disciplina"></Column>
+<!--                <Column field="disciplina" header="Disciplina"></Column>-->
                 <Column field="ativo" header="Ativo">
                     <template #body="slotProps">
                         <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>

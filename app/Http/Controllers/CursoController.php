@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,10 @@ class CursoController extends Controller
 
     public function create()
     {
-        return Inertia::render('Curso/CursoCreate');
+        $grades = Grade::all();
+        return Inertia::render('Curso/CursoCreate', [
+            'grades' => $grades,
+        ]);
     }
 
     public function edit($id)

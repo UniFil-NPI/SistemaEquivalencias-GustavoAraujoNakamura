@@ -16,4 +16,9 @@ class Grade extends Model
     {
         return $this->belongsToMany(Disciplina::class, DisciplinaGrade::class);
     }
+
+    public function cursos(): BelongsToMany
+    {
+        return $this->belongsToMany(Curso::class, CursoGrade::class);
+    }
 }
