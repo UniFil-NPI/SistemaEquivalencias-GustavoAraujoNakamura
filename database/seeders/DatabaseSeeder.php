@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
 
         $path = 'database/seed/script.sql';
         DB::unprepared(file_get_contents($path));
-        $this->command->info('Grades e Disciplinas de CC inseridas!');
+        $this->command->info('Grades e Disciplinas inseridas!');
     }
 }
