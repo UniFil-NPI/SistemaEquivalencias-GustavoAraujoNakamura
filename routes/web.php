@@ -3,6 +3,7 @@
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResultadoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,3 +47,6 @@ Route::put('/grade/{id}', [GradeController::class, 'update'])->name('grade.updat
 
 Route::put('/curso/{curso}', [CursoController::class, 'update'])->name('curso.update');
 Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
+
+
+Route::get('/pdf/create', [ResultadoController::class, 'createPdf'])->name('pdf.create');

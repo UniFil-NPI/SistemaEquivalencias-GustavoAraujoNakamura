@@ -87,7 +87,7 @@ class ResultadoController extends Controller
 
         $path = storage_path('app/public/' . $resultado->titulo . '.pdf');
 
-        Pdf::view('resultado_pdf', ['resultado' => $resultado])->save($path);
+        Pdf::view('resultadopdf', ['resultado' => $resultado])->save($path);
 
         return response()->download($path);
     }
