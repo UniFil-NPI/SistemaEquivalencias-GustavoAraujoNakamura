@@ -50,7 +50,7 @@ export default {
 
 <template>
     <authenticated-layout>
-        <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
+        <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{
                     isEditing ? 'Editar Disciplina' : 'Criar Disciplina'
                 }}</h2>
@@ -69,7 +69,7 @@ export default {
                 <input type="hidden" name="_token" :value="$page.props.csrf_token">
                 <div class="flex flex-wrap -mx-6">
                     <div class="w-full px-6 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="codigo">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="codigo">
                             Código da disciplina
                         </label>
                         <input v-model="disciplinaAtual.codigo"
@@ -77,7 +77,7 @@ export default {
                                id="codigo" name="codigo" type="text" placeholder="Código da disciplina" required>
                     </div>
                     <div class="w-full px-6">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="titulo">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="titulo">
                             Título da disciplina
                         </label>
                         <input v-model="disciplinaAtual.titulo"
@@ -85,14 +85,14 @@ export default {
                                id="titulo" name="titulo" type="text" placeholder="Título da disciplina" required>
                     </div>
                     <div class="w-full px-6 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                             Unidade Curricular (UC)
                         </label>
                         <input type="checkbox" id="uc" v-model="disciplinaAtual.uc"
                                class="form-checkbox h-5 w-5 text-orange-600">
                     </div>
                     <div v-if="disciplinaAtual.uc" class="w-full px-6 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                             Modalidade da disciplina
                         </label>
                         <select v-model="disciplinaAtual.modalidade"
@@ -107,7 +107,7 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-6 mb-6">
                     <div class="w-full md:w-1/2 px-6 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="tipo">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="tipo">
                             Tipo da disciplina
                         </label>
                         <select v-model="disciplinaAtual.tipo"
@@ -119,7 +119,7 @@ export default {
                         </select>
                     </div>
                     <div class="w-full md:w-1/2 px-6">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="periodo">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="periodo">
                             Período da disciplina
                         </label>
                         <input v-model.number="disciplinaAtual.periodo"
@@ -129,7 +129,7 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-6 mb-2">
                     <div class="w-full px-6 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2"
                                for="carga_horaria">
                             Carga horária
                         </label>
@@ -139,7 +139,7 @@ export default {
                                required>
                     </div>
                     <div class="w-full px-6 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="ativo">
+                        <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="ativo">
                             Disciplina ativa
                         </label>
                         <input type="hidden" name="ativo" :value="disciplinaAtual.ativo ? '1' : '0'">
