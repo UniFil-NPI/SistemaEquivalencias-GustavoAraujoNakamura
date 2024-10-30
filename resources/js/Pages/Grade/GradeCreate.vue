@@ -67,7 +67,7 @@ const salvarGrade = async () => {
 
 <template>
     <authenticated-layout>
-        <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
+        <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Grade' : 'Criar Grade' }}</h2>
             <form @submit.prevent="salvarGrade" class="space-y-4">
                 <div>
