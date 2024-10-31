@@ -1,12 +1,14 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import MultiSelect from "primevue/multiselect";
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
+import axios from "axios";
+import {usePage} from "@inertiajs/vue3";
 
 const props = defineProps({
     equivalencia: {
         type: Object,
-        default: () => ({titulo: '', curso: '', equivalencia: ''}),
+        default: () => ({id: '', titulo: '', curso: '', equivalencia: ''}),
     },
     isEditing: {
         type: Boolean,
@@ -22,25 +24,40 @@ const props = defineProps({
     }
 });
 
-const selectedDisciplinas = ref([]);
-const disciplinas = ref(props.disciplinas);
+const disciplinas = ref([...props.disciplinas]);
 const isEditing = ref(props.isEditing);
 
-onMounted(async () => {
-    selectedDisciplinas.value = props.selectedDisciplinas;
-});
+// Variáveis independentes para cada MultiSelect
+const selectedDisciplina1 = ref([...props.selectedDisciplinas]);
 
 const equivalencias = ref({...props.equivalencia});
 const equivalenciaAtual = ref({...props.equivalencia});
 
-// Variáveis independentes para cada MultiSelect
-const selectedDisciplina1 = ref([]);
-const selectedDisciplina2 = ref([]);
+const salvarEquivalencia = async () => {
+    const url = isEditing.value ? `/equivalencia/${equivalenciaAtual.value.id}` : '/equivalencia';
+    const method = isEditing.value ? 'put' : 'post';
+
+    try {
+        await axios[method](url, {
+            titulo: equivalenciaAtual.value.titulo,
+            disciplinas: selectedDisciplina1.value,
+            _token: usePage().props.csrf_token,
+        });
+
+        window.location.href = '/equivalencia';
+    } catch (error) {
+        console.error("Erro ao salvar o curso:", error);
+    }
+}
+
+const voltar = () => {
+    window.location.href = '/equivalencia';
+}
 
 </script>
 <template>
     <authenticated-layout>
-        <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
+        <div class="max-w-4xl mx-auto rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{
                     isEditing ? 'Editar Equivalencia' : 'Criar Equivalencia'
                 }}</h2>
@@ -53,10 +70,10 @@ const selectedDisciplina2 = ref([]);
                 </button>
             </div>
 
-            <form class="space-y-4" method="post"
-                  :action="isEditing ? '/equivalencia/' + equivalenciaAtual.id : '/equivalencia'">
+            <form @submit.prevent="salvarEquivalencia" class="space-y-4">
                 <input type="hidden" name="_method" :value="isEditing ? 'patch' : 'post' ">
                 <input type="hidden" name="_token" :value="$page.props.csrf_token">
+                <input type="hidden" name="id" :value="equivalenciaAtual.id">
 
                 <!-- Título -->
                 <div class="w-full px-6">
@@ -75,22 +92,10 @@ const selectedDisciplina2 = ref([]);
                         v-model="selectedDisciplina1"
                         :options="disciplinas"
                         optionLabel="titulo"
+                        name="id_disciplina1"
                         optionValue="id"
                         filter
                         placeholder="Escolha uma disciplina"
-                        class="w-full md:w-20rem"
-                    />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold mb-2" for="id_disciplina2">Disciplina 2</label>
-                    <MultiSelect
-                        v-model="selectedDisciplina2"
-                        :options="disciplinas"
-                        optionLabel="titulo"
-                        optionValue="id"
-                        filter
-                        placeholder="Escolha as disciplinas equivalentes da disciplina acima"
                         class="w-full md:w-20rem"
                     />
                 </div>
