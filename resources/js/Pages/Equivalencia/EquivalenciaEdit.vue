@@ -1,11 +1,10 @@
 <template>
-    <DisciplinaCreate :disciplina="$page.props.disciplina" :isEditing="true"/>
+    <DisciplinaCreate :equivalencia="$page.props.equivalencia" :selectedDisciplinas="$page.props.selectedDisciplinas" :disciplinas="$page.props.disciplinas" :isEditing="true"/>
 </template>
 
 <script>
-import DisciplinaCreate from './DisciplinaCreate.vue';
+import DisciplinaCreate from './EquivalenciaCreate.vue';
 import axios from 'axios';
-import {router} from "@inertiajs/vue3"
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
@@ -16,13 +15,17 @@ export default {
     },
     data() {
         return {
-            disciplina: {id: '', codigo: '', titulo: '', tipo: '', periodo: '', carga_horaria: 0, ativo: '', modalidade: ''},
+            equivalencia: {id: '', titulo: '', ativo: '', modalidade: ''},
+            disciplinas: {
+                type: Array,
+                default: () => [],
+            },
+            selectedDisciplinas: [],
         };
     },
     async mounted() {
         await this.carregarDisciplina();
     },
-
     methods: {
         async carregarDisciplina() {
             try {
