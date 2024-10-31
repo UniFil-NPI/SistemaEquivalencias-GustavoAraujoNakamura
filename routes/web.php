@@ -38,8 +38,8 @@ Route::resource('/curso', CursoController::class);
 Route::resource('/equivalencia', EquivalenciaController::class);
 Route::resource('/gerarEquivalencia', RelatorioController::class);
 
-Route::resource('/relatorio', EquivalenciaController::class);
-Route::resource('/relatorio', RelatorioController::class);
+//Route::resource('/relatorio', EquivalenciaController::class);
+Route::get('/relatorio', [ResultadoController::class, 'createPdf'])->name('relatorio.index');
 
 Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
 Route::get('/grade/create', [GradeController::class, 'create'])->name('grade.create');

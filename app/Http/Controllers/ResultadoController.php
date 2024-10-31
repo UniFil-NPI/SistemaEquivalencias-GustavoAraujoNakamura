@@ -81,8 +81,9 @@ class ResultadoController extends Controller
         }
     }
 
-    public function createPdf($resultado_id)
+    public function createPdf()
     {
+
         $resultado = ResultadosDisciplinas::with(['disciplinasCursadas', 'disciplinasAbatidas', 'disciplinasAtribuidas', 'gradeAntiga', 'gradeNova'])->find($resultado_id);
 
         $path = storage_path('app/public/' . $resultado->titulo . '.pdf');
