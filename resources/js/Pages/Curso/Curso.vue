@@ -49,11 +49,11 @@ const deleteCurso = async () => {
             <DataTable :value="cursos" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
                 <Column field="ano" header="Ano"></Column>
-                <Column field="ativo" header="Ativo">
-                    <template #body="slotProps">
-                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
-                    </template>
-                </Column>
+<!--                <Column field="ativo" header="Ativo">-->
+<!--                    <template #body="slotProps">-->
+<!--                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>-->
+<!--                    </template>-->
+<!--                </Column>-->
                 <Column>
                     <template #body="slotProps">
                         <a :href="route('curso.edit', slotProps.data.id)">
