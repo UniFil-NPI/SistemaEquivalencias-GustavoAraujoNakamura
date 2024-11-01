@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\Disciplina;
 use App\Models\Grade;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -28,9 +30,11 @@ class GerarEquivalenciaController extends Controller
 
     public function create()
     {
-        $grades = Grade::all();
         return Inertia::render('GerarEquivalencia/GerarEquivalenciaCreate', [
-            'grades' => $grades,
+            'disciplinas' => Disciplina::all(),
+            'cursos' => Curso::all(),
+            'grades' => Grade::all(),
+            'alunos' => User::all()
         ]);
     }
 
@@ -50,18 +54,6 @@ class GerarEquivalenciaController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'titulo' => 'required|unique:gerarEquivalencias|max:255',
-            'ano' => 'required|numeric',
-            // Adicione outras validações conforme necessário
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('gerarEquivalencia.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         GerarEquivalencia::create($request->all());
 
         return redirect()->route('gerarEquivalencia.index');

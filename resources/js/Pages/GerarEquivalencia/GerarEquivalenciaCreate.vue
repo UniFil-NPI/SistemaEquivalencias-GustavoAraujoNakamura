@@ -3,99 +3,70 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
 import MultiSelect from 'primevue/multiselect';
+import {ref} from "vue";
 
-// export default {
-//     components: {
-//         AuthenticatedLayout,
-//         MultiSelect,
-//     },
-//     props: {
-//         grades: {
-//             type: Array,
-//             default: () => [],
-//         },
-//         disciplinas: {
-//             type: Array,
-//             default: () => [],
-//         },
-//         isEditing: {
-//             type: Boolean,
-//             default: false,
-//         }
-//     },
-//     data() {
-//         return {
-//             csrfToken: usePage().props.csrf_token,
-//             grades: this.grades,
-//             disciplinas: this.disciplinas,
-//             gradeAntiga: null,
-//             gradeNova: null,
-//             disciplinaInsert: null,
-//             chInsert: '',
-//             tituloGeracao: '',
-//         };
-//     },
-//     methods: {
-//         async SalvarGerarEquivalencias() {
-//             const url = this.isEditing ? `/gerarEquivalencia/${this.GerarEquivalencia.id}` : '/GerarEquivalencia';
-//             const method = this.isEditing ? 'put' : 'post';
-//
-//             try {
-//                 await axios[method](url, {
-//                     ...this.gerarEquivalencias,
-//                     gerarEquivalencias: this.selectedGerarEquivalencias,
-//                     _token: this.csrfToken,
-//                 });
-//
-//                 window.location.href = '/gerarEquivalencia';
-//             } catch (error) {
-//                 console.error("Erro ao salvar o Gerar Equivalencia:", error);
-//             }
-//         },
-//         async carregarGrades() {
-//             try {
-//                 if (this.grades.length > 0) {
-//                     this.availableGrades = this.grades;
-//                 } else {
-//                     const response = await axios.get('/api/grade');
-//                     this.availableGrades = response.data;
-//                 }
-//             } catch (error) {
-//                 console.error("Erro ao carregar as grades:", error);
-//             }
-//         },
-//         async carregarDisciplinas() {
-//             try {
-//                 if (this.disciplinas.length > 0) {
-//                     this.availableDisciplinas = this.disciplinas;
-//                 } else {
-//                     const response = await axios.get('/api/disciplina');
-//                     this.availableDisciplinas = response.data;
-//                 }
-//             } catch (error) {
-//                 console.error("Erro ao carregar as disciplinas:", error);
-//             }
-//         }
-//     },
-//     async mounted() {
-//         await this.carregarGrades();
-//         await this.carregarDisciplinas();
-//     },
-// };
+const props = defineProps({
+    disciplinas: {
+        type: Array,
+        default: () => [],
+    },
+    cursos: {
+        type: Array,
+        default: () => [],
+    },
+    grades: {
+        type: Array,
+        default: () => [],
+    },
+    alunos: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+const disciplinas = ref([...props.disciplinas]);
+const cursos = ref([...props.cursos]);
+const grades = ref([...props.grades]);
+const alunos = ref([...props.alunos]);
+console.log(props.alunos)
+const cursoAntiga = ref();
+const cursoNova = ref();
+const gradeAntiga = ref();
+const gradeNova = ref();
+const disciplinaInsert = ref();
+const usuarioSelecionado = ref();
+
+const salvarEquiv = async () => {
+    const url = isEditing.value ? `/equivalencia/${equivalenciaAtual.value.id}` : '/equivalencia';
+    const method = isEditing.value ? 'put' : 'post';
+
+    try {
+        await axios[method](url, {
+            titulo: equivalenciaAtual.value.titulo,
+            disciplinas: selectedDisciplina1.value,
+            _token: usePage().props.csrf_token,
+        });
+
+        window.location.href = '/equivalencia';
+    } catch (error) {
+        console.error("Erro ao salvar o curso:", error);
+    }
+}
+
 </script>
 
 <template>
     <AuthenticatedLayout>
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">Criar Geração de Equivalência</h2>
-            <form @submit.prevent="SalvarGerarEquivalencias" class="space-y-4">
-                <input type="hidden" name="_token" :value="csrfToken">
+            <form @submit.prevent="salvarEquiv" class="space-y-4">
+                <input type="hidden" name="_token" :value="$page.props.csrf_token">
 
                 <div class="mt-4">
                     <label class="block text-sm font-bold mb-2" for="usuario_selecionado">Nome do Aluno</label>
                     <MultiSelect
                         v-model="usuarioSelecionado"
-                        :options="usuarios"
+                        :options="alunos"
                         optionLabel="nome"
                         optionValue="id"
                         filter
@@ -179,7 +150,7 @@ import MultiSelect from 'primevue/multiselect';
 
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="ch_insert">Carga Horária</label>
-                        <input v-model="chInsert"
+                        <input
                                class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
                                id="ch_insert" name="ch_insert" type="number" placeholder="Carga Horária" required>
                     </div>
@@ -188,7 +159,7 @@ import MultiSelect from 'primevue/multiselect';
                 <!-- Título de Geração -->
                 <div class="mt-4">
                     <label class="block text-sm font-bold mb-2" for="titulo_geracao">Título da Geração</label>
-                    <input v-model="tituloGeracao"
+                    <input
                            class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
                            id="titulo_geracao" name="titulo_geracao" type="text" placeholder="Título da geração de equivalências" required>
                 </div>
