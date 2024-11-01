@@ -67,7 +67,7 @@ const salvarEquiv = async () => {
                     <MultiSelect
                         v-model="usuarioSelecionado"
                         :options="alunos"
-                        optionLabel="nome"
+                        optionLabel="name"
                         optionValue="id"
                         filter
                         placeholder="escolha apenas um aluno"
