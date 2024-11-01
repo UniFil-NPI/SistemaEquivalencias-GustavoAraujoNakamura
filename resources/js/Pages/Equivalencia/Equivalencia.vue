@@ -48,7 +48,7 @@ const deleteEquivalencia = async () => {
             </div>
             <DataTable :value="equivalencia" paginator :rows="10">
                 <Column field="titulo" header="Titulo"></Column>
-                <Column field="disciplina" header="Disciplina"></Column>
+<!--                <Column field="disciplina" header="Disciplina"></Column>-->
                 <Column field="disciplinas" header="Disciplinas"></Column>
 <!--                <Column field="ativo" header="Ativo">-->
 <!--                    <template #body="slotProps">-->
