@@ -48,7 +48,7 @@ const deleteGerarEquivalencia = async () => {
             </div>
             <DataTable :value="gerarEquivalencias" paginator :rows="10">
                 <Column field="tituloGeracao" header="Título"></Column>
-                <Column field="usuario" header="Usuário"></Column>
+                <Column field="user" header="Usuário"></Column>
                 <Column field="cursoAntigo" header="Curso Antigo"></Column>
                 <Column field="cursoNovo" header="Curso Novo"></Column>
                 <Column field="gradeAntiga" header="Grade Antiga"></Column>
