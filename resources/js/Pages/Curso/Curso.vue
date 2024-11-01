@@ -56,12 +56,14 @@ const deleteCurso = async () => {
 <!--                </Column>-->
                 <Column>
                     <template #body="slotProps">
-                        <a :href="route('curso.edit', slotProps.data.id)">
-                            <Button icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success p-button-outlined p-mr-2"></Button>
-                        </a>
-                        <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
-                                @click="confirmDeleteCurso(slotProps.data.id)"></Button>
+                        <div class="flex justify-end">
+                            <a :href="route('curso.edit', slotProps.data.id)">
+                                <Button icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-success p-button-outlined p-mr-2"></Button>
+                            </a>
+                            <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
+                                    @click="confirmDeleteCurso(slotProps.data.id)"></Button>
+                        </div>
                     </template>
                 </Column>
             </DataTable>
