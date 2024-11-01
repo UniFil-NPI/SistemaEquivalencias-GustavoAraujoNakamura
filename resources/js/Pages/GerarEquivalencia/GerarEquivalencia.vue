@@ -1,58 +1,93 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
 import MultiSelect from 'primevue/multiselect';
-// import { ref } from 'vue';
 
-// const grades = ref([]);             // Lista de grades disponíveis
-// const disciplinas = ref([]);         // Lista de disciplinas disponíveis
-// const gradeAntiga = ref(null);       // Grade antiga selecionada
-// const gradeNova = ref(null);         // Grade nova selecionada
-// const disciplinaInsert = ref(null);  // Disciplina selecionada
-// const chInsert = ref('');            // Carga horária da disciplina
-// const tituloGeracao = ref('');       // Título da geração de equivalência
-// const isEditing = ref(false);        // Variável condicional para título
-
-export default {
-    components: {
-        AuthenticatedLayout,
-        MultiSelect,
-    },
-    props: {
-        grades: {
-            type: Array,
-            default: () => [],
-        },
-        disciplinas: {
-            type: Array,
-            default: () => [],
-        },
-        isEditing: {
-            type: Boolean,
-            default: false,
-        }
-    },
-    data() {
-        return {
-            csrfToken: usePage().props.csrf_token,
-            grades: this.grades,
-            disciplinas: this.disciplinas,
-            gradeAntiga: null,
-            gradeNova: null,
-            disciplinaInsert: null,
-            chInsert: '',
-            tituloGeracao: '',
-        };
-    },
-}
+// export default {
+//     components: {
+//         AuthenticatedLayout,
+//         MultiSelect,
+//     },
+//     props: {
+//         grades: {
+//             type: Array,
+//             default: () => [],
+//         },
+//         disciplinas: {
+//             type: Array,
+//             default: () => [],
+//         },
+//         isEditing: {
+//             type: Boolean,
+//             default: false,
+//         }
+//     },
+//     data() {
+//         return {
+//             csrfToken: usePage().props.csrf_token,
+//             grades: this.grades,
+//             disciplinas: this.disciplinas,
+//             gradeAntiga: null,
+//             gradeNova: null,
+//             disciplinaInsert: null,
+//             chInsert: '',
+//             tituloGeracao: '',
+//         };
+//     },
+//     methods: {
+//         async SalvarGerarEquivalencias() {
+//             const url = this.isEditing ? `/gerarEquivalencia/${this.GerarEquivalencia.id}` : '/GerarEquivalencia';
+//             const method = this.isEditing ? 'put' : 'post';
+//
+//             try {
+//                 await axios[method](url, {
+//                     ...this.gerarEquivalencias,
+//                     gerarEquivalencias: this.selectedGerarEquivalencias,
+//                     _token: this.csrfToken,
+//                 });
+//
+//                 window.location.href = '/gerarEquivalencia';
+//             } catch (error) {
+//                 console.error("Erro ao salvar o Gerar Equivalencia:", error);
+//             }
+//         },
+//         async carregarGrades() {
+//             try {
+//                 if (this.grades.length > 0) {
+//                     this.availableGrades = this.grades;
+//                 } else {
+//                     const response = await axios.get('/api/grade');
+//                     this.availableGrades = response.data;
+//                 }
+//             } catch (error) {
+//                 console.error("Erro ao carregar as grades:", error);
+//             }
+//         },
+//         async carregarDisciplinas() {
+//             try {
+//                 if (this.disciplinas.length > 0) {
+//                     this.availableDisciplinas = this.disciplinas;
+//                 } else {
+//                     const response = await axios.get('/api/disciplina');
+//                     this.availableDisciplinas = response.data;
+//                 }
+//             } catch (error) {
+//                 console.error("Erro ao carregar as disciplinas:", error);
+//             }
+//         }
+//     },
+//     async mounted() {
+//         await this.carregarGrades();
+//         await this.carregarDisciplinas();
+//     },
+// };
 </script>
-
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Curso' : 'Criar Curso' }}</h2>
-            <form @submit.prevent="gerarEquivalencias" class="space-y-4">
+            <form @submit.prevent="SalvarGerarEquivalencias" class="space-y-4">
                 <input type="hidden" name="_token" :value="csrfToken">
 
                 <!-- Seleção de Grades -->
