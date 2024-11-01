@@ -87,7 +87,7 @@ import MultiSelect from 'primevue/multiselect';
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
-            <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Curso' : 'Criar Curso' }}</h2>
+            <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Geração de equivalência' : 'Criar Geração de equivalência' }}</h2>
             <form @submit.prevent="SalvarGerarEquivalencias" class="space-y-4">
                 <input type="hidden" name="_token" :value="csrfToken">
 
