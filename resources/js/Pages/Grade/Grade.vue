@@ -52,11 +52,11 @@ const deleteGrade = async () => {
             <DataTable :value="grade" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
 <!--                <Column field="disciplina" header="Disciplina"></Column>-->
-                <Column field="ativo" header="Ativo">
-                    <template #body="slotProps">
-                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>
-                    </template>
-                </Column>
+<!--                <Column field="ativo" header="Ativo">-->
+<!--                    <template #body="slotProps">-->
+<!--                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>-->
+<!--                    </template>-->
+<!--                </Column>-->
                 <Column>
                     <template #body="slotProps">
                         <a :href="route('grade.edit', slotProps.data.id)">
