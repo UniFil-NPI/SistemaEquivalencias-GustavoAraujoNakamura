@@ -91,6 +91,19 @@ import MultiSelect from 'primevue/multiselect';
             <form @submit.prevent="SalvarGerarEquivalencias" class="space-y-4">
                 <input type="hidden" name="_token" :value="csrfToken">
 
+                <div class="mt-4">
+                    <label class="block text-sm font-bold mb-2" for="usuario_selecionado">Nome do Aluno</label>
+                    <MultiSelect
+                        v-model="usuarioSelecionado"
+                        :options="usuarios"
+                        optionLabel="nome"
+                        optionValue="id"
+                        filter
+                        placeholder="escolha apenas um aluno"
+                        class="w-full"
+                    />
+                </div>
+
                 <!-- Seleção de Cursos -->
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full">
