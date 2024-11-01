@@ -122,14 +122,14 @@ import MultiSelect from 'primevue/multiselect';
                 <!-- Seleção de Disciplinas -->
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full">
-                        <label class="block text-sm font-bold mb-2" for="disciplina_insert">Disciplina</label>
+                        <label class="block text-sm font-bold mb-2" for="disciplina_insert">Disciplinas</label>
                         <MultiSelect
                             v-model="disciplinaInsert"
                             :options="disciplinas"
                             optionLabel="titulo"
                             optionValue="id"
                             filter
-                            placeholder="Selecione uma disciplina"
+                            placeholder="Selecione as disciplinas"
                             class="w-full"
                         />
                     </div>
