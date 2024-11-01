@@ -93,6 +93,32 @@ import MultiSelect from 'primevue/multiselect';
                 <!-- Seleção de Grades -->
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full">
+                        <label class="block text-sm font-bold mb-2" for="curso_antigo">Curso Antigo</label>
+                        <MultiSelect
+                            v-model="cursoAntiga"
+                            :options="cursos"
+                            optionLabel="titulo"
+                            optionValue="id"
+                            filter
+                            placeholder="Selecione o curso antigo ou mesmo curso se não mudou"
+                            class="w-full"
+                        />
+                    </div>
+
+                    <div class="w-full">
+                        <label class="block text-sm font-bold mb-2" for="curso_novo">Curso Novo</label>
+                        <MultiSelect
+                            v-model="cursoNova"
+                            :options="cursos"
+                            optionLabel="titulo"
+                            optionValue="id"
+                            filter
+                            placeholder="Selecione o curso novo ou mesmo curso se não mudou"
+                            class="w-full"
+                        />
+                    </div>
+
+                    <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="grade_antiga">Grade Antiga</label>
                         <MultiSelect
                             v-model="gradeAntiga"
@@ -155,7 +181,7 @@ import MultiSelect from 'primevue/multiselect';
                     <button
                         class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">
-                        Gerar Equivalência
+                        {{ isEditing ? 'Atualizar Geração de equivalência' : 'Criar Geração de equivalência' }}
                     </button>
                 </div>
             </form>
