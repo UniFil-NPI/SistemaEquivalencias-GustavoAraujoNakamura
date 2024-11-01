@@ -39,7 +39,7 @@ const deleteEquivalencia = async () => {
     <Toast></Toast>
     <AuthenticatedLayout>
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
-            <h2 class="mb-4 text-2xl font-bold text-center">Lista de equivalencias</h2>
+            <h2 class="mb-4 text-2xl font-bold text-center">Lista de Definição Equivalências</h2>
             <div class="flex justify-end mb-4">
                 <a href="/equivalencia/create" class="p-button p-button-secondary" style="color: white;">
                     <i class="pi pi-plus" style="margin-right: 0.5rem;"></i>
