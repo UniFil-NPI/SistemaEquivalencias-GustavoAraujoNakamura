@@ -83,6 +83,7 @@ import MultiSelect from 'primevue/multiselect';
 //     },
 // };
 </script>
+
 <template>
     <authenticated-layout>
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
@@ -90,7 +91,7 @@ import MultiSelect from 'primevue/multiselect';
             <form @submit.prevent="SalvarGerarEquivalencias" class="space-y-4">
                 <input type="hidden" name="_token" :value="csrfToken">
 
-                <!-- Seleção de Grades -->
+                <!-- Seleção de Cursos -->
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="curso_antigo">Curso Antigo</label>
@@ -100,7 +101,7 @@ import MultiSelect from 'primevue/multiselect';
                             optionLabel="titulo"
                             optionValue="id"
                             filter
-                            placeholder="Selecione o curso antigo ou mesmo curso se não mudou"
+                            placeholder="Selecione o curso antigo"
                             class="w-full"
                         />
                     </div>
@@ -113,11 +114,14 @@ import MultiSelect from 'primevue/multiselect';
                             optionLabel="titulo"
                             optionValue="id"
                             filter
-                            placeholder="Selecione o curso novo ou mesmo curso se não mudou"
+                            placeholder="Selecione o curso novo"
                             class="w-full"
                         />
                     </div>
+                </div>
 
+                <!-- Seleção de Grades -->
+                <div class="flex flex-col md:flex-row gap-4 mt-4">
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="grade_antiga">Grade Antiga</label>
                         <MultiSelect
@@ -146,7 +150,7 @@ import MultiSelect from 'primevue/multiselect';
                 </div>
 
                 <!-- Seleção de Disciplinas -->
-                <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex flex-col md:flex-row gap-4 mt-4">
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="disciplina_insert">Disciplinas</label>
                         <MultiSelect
@@ -169,7 +173,7 @@ import MultiSelect from 'primevue/multiselect';
                 </div>
 
                 <!-- Título de Geração -->
-                <div>
+                <div class="mt-4">
                     <label class="block text-sm font-bold mb-2" for="titulo_geracao">Título da Geração</label>
                     <input v-model="tituloGeracao"
                            class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
@@ -188,3 +192,4 @@ import MultiSelect from 'primevue/multiselect';
         </div>
     </authenticated-layout>
 </template>
+
