@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\EquivalenciaController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\GerarEquivalenciaController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -36,7 +37,7 @@ Route::resource('/disciplina', DisciplinaController::class);
 Route::resource('/grade', GradeController::class);
 Route::resource('/curso', CursoController::class);
 Route::resource('/equivalencia', EquivalenciaController::class);
-Route::resource('/gerarEquivalencia', RelatorioController::class);
+Route::resource('/gerarEquivalencia', GerarEquivalenciaController::class);
 
 //Route::resource('/relatorio', EquivalenciaController::class);
 Route::get('/relatorio', [ResultadoController::class, 'createPdf'])->name('relatorio.index');
