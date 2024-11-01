@@ -85,9 +85,9 @@ import MultiSelect from 'primevue/multiselect';
 </script>
 
 <template>
-    <authenticated-layout>
+    <AuthenticatedLayout>
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
-            <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Geração de equivalência' : 'Criar Geração de equivalência' }}</h2>
+            <h2 class="mb-4 text-2xl font-bold text-center">Criar Geração de Equivalência</h2>
             <form @submit.prevent="SalvarGerarEquivalencias" class="space-y-4">
                 <input type="hidden" name="_token" :value="csrfToken">
 
@@ -185,10 +185,10 @@ import MultiSelect from 'primevue/multiselect';
                     <button
                         class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">
-                        {{ isEditing ? 'Atualizar Geração de equivalência' : 'Criar Geração de equivalência' }}
+                        Criar Geração de Equivalência
                     </button>
                 </div>
             </form>
         </div>
-    </authenticated-layout>
+    </AuthenticatedLayout>
 </template>
