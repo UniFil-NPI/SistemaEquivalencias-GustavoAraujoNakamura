@@ -131,9 +131,17 @@ class GerarEquivalenciaController extends Controller
         return response()->json(['message' => 'GerarEquivalencia atualizado com sucesso', 'gerarEquivalencia' => $gerarEquivalencia]);
     }
 
-    public function destroy(GerarEquivalencia $gerarEquivalencia)
+    public function destroy(Request $request)
     {
-        $gerarEquivalencia->delete();
+        DB::table('gerar_equivalencia_disciplinas')
+            ->where('gerar_equivalencia_id', $request->gerarEquivalencium)
+            ->delete();
+
+        DB::table('gerar_equivalencia')
+            ->where('id', $request->gerarEquivalencium)
+            ->delete();
+
+
         return response()->json(['message' => 'GerarEquivalencia deletado com sucesso']);
     }
 }
