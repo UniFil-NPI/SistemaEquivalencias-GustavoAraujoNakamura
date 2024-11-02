@@ -63,6 +63,9 @@ const salvarGrade = async () => {
         console.error('Erro ao salvar a grade:', error);
     }
 };
+    const voltar = () => {
+        window.location.href = '/grade';
+    };
 </script>
 
 <template>
@@ -70,6 +73,15 @@ const salvarGrade = async () => {
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Grade' : 'Criar Grade' }}</h2>
             <form @submit.prevent="salvarGrade" class="space-y-4">
+                <div class="flex justify-start mb-4">
+                    <button
+                        type="button"
+                        @click="voltar"
+                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Voltar
+                    </button>
+                </div>
+
                 <div>
                     <label class="block text-sm font-bold mb-2" for="titulo">Título da Grade</label>
                     <input v-model="grade.titulo"
