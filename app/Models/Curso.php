@@ -12,7 +12,6 @@ class Curso extends Model
     protected $fillable = [
         'titulo',
         'ano',
-        'ativo'
     ];
     public function grades(): BelongsToMany
     {
