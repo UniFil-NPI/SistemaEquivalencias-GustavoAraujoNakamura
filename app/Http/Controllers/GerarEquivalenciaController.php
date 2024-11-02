@@ -25,8 +25,20 @@ class GerarEquivalenciaController extends Controller
 {
     public function index()
     {
+        $equivs = GerarEquivalencia::all();
+
+        foreach ($equivs as $equiv) {
+            $equiv->disciplinas = DB::table('gerar_equivalencia_disciplinas')
+                ->where('gerar_equivalencia_id', $equiv->id)
+                ->join('disciplinas', 'disciplinas.id', '=', 'gerar_equivalencia_disciplinas.disciplina_id')
+                ->select('disciplinas.titulo')
+                ->pluck('titulo');
+
+            $equiv->disciplinas = implode(', ', $equiv->disciplinas->toArray());
+        }
+
         return Inertia::render('GerarEquivalencia/GerarEquivalencia', [
-            'gerarEquivalencias' => GerarEquivalencia::all(),
+            'gerarEquivalencias' => $equivs,
         ]);
     }
 
