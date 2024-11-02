@@ -81,13 +81,6 @@ watch(disciplinaInsert, (newVal) => {
     }, 0);
 
     chSelecionada.value = totalCargaHoraria;
-
-    const maxCargaHoraria = cursoNova.reduce((total, cursoId) => {
-        const curso = disciplinas.value.find(d => d.id === cursoId);
-        return total + (curso ? parseInt(curso.carga_horaria, 10) : 0);
-    }, 0);
-
-
 });
 
 </script>
