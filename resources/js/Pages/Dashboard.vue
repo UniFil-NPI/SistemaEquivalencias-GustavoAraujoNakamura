@@ -14,7 +14,7 @@ import { Head } from '@inertiajs/vue3';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">Você já está logado! Aperte em Disciplinas para mais informações.</div>
+                    <div class="p-6 text-gray-900 dark:text-gray-100">Seja bem-vindo(a)! você já está logado no sistema de equivalências da UniFil!.</div>
                 </div>
             </div>
         </div>
