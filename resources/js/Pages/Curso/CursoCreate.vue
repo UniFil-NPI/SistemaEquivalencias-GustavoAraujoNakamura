@@ -48,6 +48,7 @@ export default {
             } catch (error) {
                 console.error("Erro ao salvar o curso:", error);
             }
+            window.location.href = '/curso';
         },
         async carregarGrades() {
             try {
@@ -65,8 +66,6 @@ export default {
     async mounted() {
         await this.carregarGrades();
     },
-
-
 
 };
 </script>
