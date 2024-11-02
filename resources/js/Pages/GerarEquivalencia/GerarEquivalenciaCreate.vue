@@ -3,7 +3,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
 import MultiSelect from 'primevue/multiselect';
-import {ref} from "vue";
+import InputText from 'primevue/inputtext';
+import Dropdown from 'primevue/dropdown';
+import {ref, watch} from "vue";
 
 const props = defineProps({
     disciplinas: {
@@ -22,36 +24,71 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    isEditing: {
+        type: Boolean,
+        default: false
+    },
+    equivalenciaAtual: {
+        type: Object,
+        default: () => ({id: '', titulo: '', curso: '', equivalencia: ''}),
+    }
 });
 
+// setting options
 const disciplinas = ref([...props.disciplinas]);
 const cursos = ref([...props.cursos]);
 const grades = ref([...props.grades]);
 const alunos = ref([...props.alunos]);
-console.log(props.alunos)
+const isEditing = ref(props.isEditing);
+const equivalenciaAtual = ref({...props.equivalenciaAtual});
+
+// setting state handlers
 const cursoAntiga = ref();
 const cursoNova = ref();
 const gradeAntiga = ref();
 const gradeNova = ref();
 const disciplinaInsert = ref();
 const usuarioSelecionado = ref();
+const titulo = ref();
+const chSelecionada = ref(0);
 
 const salvarEquiv = async () => {
-    const url = isEditing.value ? `/equivalencia/${equivalenciaAtual.value.id}` : '/equivalencia';
+    const url = isEditing.value ? `/gerarEquivalencia/${equivalenciaAtual.value.id}` : '/gerarEquivalencia';
     const method = isEditing.value ? 'put' : 'post';
 
     try {
         await axios[method](url, {
-            titulo: equivalenciaAtual.value.titulo,
-            disciplinas: selectedDisciplina1.value,
+            titulo: titulo.value,
+            disciplinas: disciplinaInsert.value,
+            cursoAntiga: cursoAntiga.value,
+            curso: cursoNova.value,
+            grade_antiga: gradeAntiga.value,
+            grade_nova: gradeNova.value,
+            usuarioSelecionado: usuarioSelecionado.value,
             _token: usePage().props.csrf_token,
         });
 
-        window.location.href = '/equivalencia';
+        window.location.href = '/gerarEquivalencia';
     } catch (error) {
-        console.error("Erro ao salvar o curso:", error);
+        console.error("Erro ao salvar a gerarEquivalencia:", error);
     }
 }
+
+watch(disciplinaInsert, (newVal) => {
+    const totalCargaHoraria = newVal.reduce((total, disciplinaId) => {
+        const disciplina = disciplinas.value.find(d => d.id === disciplinaId);
+        return total + (disciplina ? parseInt(disciplina.carga_horaria, 10) : 0);
+    }, 0);
+
+    chSelecionada.value = totalCargaHoraria;
+
+    const maxCargaHoraria = cursoNova.reduce((total, cursoId) => {
+        const curso = disciplinas.value.find(d => d.id === cursoId);
+        return total + (curso ? parseInt(curso.carga_horaria, 10) : 0);
+    }, 0);
+
+
+});
 
 </script>
 
@@ -64,7 +101,7 @@ const salvarEquiv = async () => {
 
                 <div class="mt-4">
                     <label class="block text-sm font-bold mb-2" for="usuario_selecionado">Nome do Aluno</label>
-                    <MultiSelect
+                    <Dropdown
                         v-model="usuarioSelecionado"
                         :options="alunos"
                         optionLabel="name"
@@ -79,7 +116,7 @@ const salvarEquiv = async () => {
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="curso_antigo">Curso Antigo</label>
-                        <MultiSelect
+                        <Dropdown
                             v-model="cursoAntiga"
                             :options="cursos"
                             optionLabel="titulo"
@@ -92,7 +129,7 @@ const salvarEquiv = async () => {
 
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="curso_novo">Curso Novo</label>
-                        <MultiSelect
+                        <Dropdown
                             v-model="cursoNova"
                             :options="cursos"
                             optionLabel="titulo"
@@ -108,7 +145,7 @@ const salvarEquiv = async () => {
                 <div class="flex flex-col md:flex-row gap-4 mt-4">
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="grade_antiga">Grade Antiga</label>
-                        <MultiSelect
+                        <Dropdown
                             v-model="gradeAntiga"
                             :options="grades"
                             optionLabel="titulo"
@@ -121,7 +158,7 @@ const salvarEquiv = async () => {
 
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="grade_nova">Grade Nova</label>
-                        <MultiSelect
+                        <Dropdown
                             v-model="gradeNova"
                             :options="grades"
                             optionLabel="titulo"
@@ -150,9 +187,9 @@ const salvarEquiv = async () => {
 
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="ch_insert">Carga Horária</label>
-                        <input
-                               class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
-                               id="ch_insert" name="ch_insert" type="number" placeholder="Carga Horária" required>
+                        <InputText
+                               class="block w-full bg-transparent"
+                               id="ch_insert" name="ch_insert" type="number" v-model="chSelecionada" placeholder="Carga Horária" disabled="disabled" required />
                     </div>
                 </div>
 
@@ -161,7 +198,7 @@ const salvarEquiv = async () => {
                     <label class="block text-sm font-bold mb-2" for="titulo_geracao">Título da Geração</label>
                     <input
                            class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
-                           id="titulo_geracao" name="titulo_geracao" type="text" placeholder="Título da geração de equivalências" required>
+                           id="titulo_geracao" v-model="titulo" name="titulo_geracao" type="text" placeholder="Título da geração de equivalências" required>
                 </div>
 
                 <!-- Botão de Envio -->

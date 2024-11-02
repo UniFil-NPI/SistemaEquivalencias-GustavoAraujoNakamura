@@ -17,7 +17,8 @@ class GerarEquivalencia extends Model
         'titulo',
         'curso',
         'grade_antiga',
-        'grade_nova'
+        'grade_nova',
+        'user_id',
     ];
 
     public function disciplinasCursadas()

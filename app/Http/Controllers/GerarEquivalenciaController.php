@@ -4,21 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Curso;
 use App\Models\Disciplina;
+use App\Models\GerarEquivalencia;
 use App\Models\Grade;
 use App\Models\User;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use App\Models\GerarEquivalencia;
 
 /**
  *
  * @param Request $request
- * @param  int  $id
+ * @param int $id
  * @return Response
  */
-
 class GerarEquivalenciaController extends Controller
 {
     public function index()
@@ -52,11 +54,44 @@ class GerarEquivalenciaController extends Controller
         return response()->json($gerarEquivalencia);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse|RedirectResponse
     {
-        GerarEquivalencia::create($request->all());
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('gerarEquivalencia.index');
+            $data =
+                [
+                    ...$request->only([
+                        'titulo',
+                        'curso',
+                        'grade_antiga',
+                        'grade_nova'
+                    ]),
+                    'user_id' => $request->get('usuarioSelecionado'),
+                ];
+
+
+            $equiv = GerarEquivalencia::create($data);
+
+            $equiv->save();
+
+            $equivalenciaDisciplinas = $request->only(['disciplinas']);
+
+            foreach ($equivalenciaDisciplinas['disciplinas'] as $equivalenciaDisciplina) {
+                DB::table('gerar_equivalencia_disciplinas')->insert([
+                    'disciplina_id' => $equivalenciaDisciplina,
+                    'gerar_equivalencia_id' => $equiv->id
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('gerarEquivalencia.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            echo(var_dump($e->getMessage()));
+            return response()->json(['message' => 'Erro ao criar a equivalência'], 500);
+        }
     }
 
     public function update(Request $request, $id)
