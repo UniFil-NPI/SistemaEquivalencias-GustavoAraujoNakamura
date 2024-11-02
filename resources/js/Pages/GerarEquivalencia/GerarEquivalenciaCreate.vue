@@ -134,8 +134,8 @@ const salvarEquiv = async () => {
                 </div>
 
                 <!-- Seleção de Disciplinas -->
-                <div class="flex flex-col md:flex-row gap-4 mt-4">
-                    <div class="w-full">
+                <div>
+                    <div>
                         <label class="block text-sm font-bold mb-2" for="disciplina_insert">Disciplinas</label>
                         <MultiSelect
                             v-model="disciplinaInsert"
