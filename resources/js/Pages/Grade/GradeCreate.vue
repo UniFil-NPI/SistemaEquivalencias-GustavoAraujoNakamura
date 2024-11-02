@@ -58,7 +58,7 @@ const salvarGrade = async () => {
             _token: csrfToken,
         });
 
-        //window.location.href = '/grade';
+        window.location.href = '/grade';
     } catch (error) {
         console.error('Erro ao salvar a grade:', error);
     }
