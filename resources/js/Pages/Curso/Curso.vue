@@ -49,12 +49,7 @@ const deleteCurso = async () => {
             <DataTable :value="cursos" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
                 <Column field="ano" header="Ano"></Column>
-                <Column field="grade" header="Grade"></Column>
-<!--                <Column field="ativo" header="Ativo">-->
-<!--                    <template #body="slotProps">-->
-<!--                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>-->
-<!--                    </template>-->
-<!--                </Column>-->
+                <Column field="grade.titulo" header="Grade"></Column> <!-- Mudança aqui -->
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">
