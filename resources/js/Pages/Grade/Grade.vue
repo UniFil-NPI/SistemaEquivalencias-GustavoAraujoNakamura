@@ -51,12 +51,18 @@ const deleteGrade = async () => {
             </div>
             <DataTable :value="grade" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
-<!--                <Column field="disciplina" header="Disciplina"></Column>-->
-<!--                <Column field="ativo" header="Ativo">-->
-<!--                    <template #body="slotProps">-->
-<!--                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>-->
-<!--                    </template>-->
-<!--                </Column>-->
+                <Column header="Disciplinas">
+                    <template #body="slotProps">
+                        <div class="disciplinas-list">
+                            <ul>
+                                <li v-for="disciplina in slotProps.data.disciplinas" :key="disciplina.id">
+                                    {{ disciplina.titulo }}
+                                </li>
+                            </ul>
+                        </div>
+                    </template>
+                </Column>
+
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">
@@ -89,5 +95,20 @@ const deleteGrade = async () => {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
+}
+</style>
+
+<style>
+.disciplinas-list ul {
+    list-style: none; /* Remove os marcadores da lista */
+    padding: 0; /* Remove o padding */
+    margin: 0; /* Remove a margem */
+}
+
+.disciplinas-list li {
+    font-size: 0.6rem; /* Ajusta o tamanho da fonte */
+    white-space: nowrap; /* Impede que as palavras sejam quebradas em várias linhas */
+    overflow: hidden; /* Oculta o excesso de texto */
+    text-overflow: ellipsis; /* Adiciona reticências ao final do texto se ele for muito longo */
 }
 </style>
