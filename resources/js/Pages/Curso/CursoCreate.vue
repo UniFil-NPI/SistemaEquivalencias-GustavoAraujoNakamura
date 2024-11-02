@@ -61,12 +61,14 @@ export default {
             } catch (error) {
                 console.error("Erro ao carregar as grades:", error);
             }
-        }
+        },
+        voltar() {
+            window.location.href = '/curso';
+        },
     },
     async mounted() {
         await this.carregarGrades();
     },
-
 };
 </script>
 
@@ -76,7 +78,14 @@ export default {
             <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Curso' : 'Criar Curso' }}</h2>
             <form @submit.prevent="salvarCurso" class="space-y-4">
                 <input type="hidden" name="_token" :value="csrfToken">
-
+                <div class="flex justify-start mb-4">
+                    <button
+                        type="button"
+                        @click="voltar"
+                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Voltar
+                    </button>
+                </div>
                 <div>
                     <label class="block text-sm font-bold mb-2" for="titulo">Título do Curso</label>
                     <input v-model="curso.titulo"
