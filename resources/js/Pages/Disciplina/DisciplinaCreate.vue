@@ -62,7 +62,6 @@ export default {
                     Voltar
                 </button>
             </div>
-
             <form class="space-y-4" method="post"
                   :action="isEditing ? '/disciplina/' + disciplinaAtual.id : '/disciplina'">
                 <input type="hidden" name="_method" :value="isEditing ? 'patch' : 'post' ">
