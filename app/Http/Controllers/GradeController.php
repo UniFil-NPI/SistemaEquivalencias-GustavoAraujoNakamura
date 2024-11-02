@@ -27,7 +27,9 @@ class GradeController extends Controller
     public function edit($id)
     {
         $grade = Grade::with('disciplinas')->findOrFail($id);
+
         $disciplinas = Disciplina::all();
+
         return Inertia::render('Grade/GradeEdit', [
             'grade' => $grade,
             'disciplinas' => $disciplinas,
@@ -70,20 +72,17 @@ class GradeController extends Controller
 
     public function update(Request $request, Grade $grade)
     {
-        $validated = $request->validate([
-            'body.grade.titulo' => 'required|string|max:255',
-            'body.grade.ch' => 'required|integer',
-            'body.grade.periodo' => 'required|integer',
-            'body.grade.ativo' => 'required|boolean',
-            'body.disciplinas' => 'required|array',
-            'body.disciplinas.*' => 'integer|exists:disciplinas,id',
+        $req = $request->all();
+
+        $grade->update([
+            'titulo' => $req['body']['grade']['titulo']
         ]);
 
-        $grade->update($request->all());
+        $grade->disciplinas()->sync(
+            $req['body']['disciplinas']
+        );
 
-        $grade->disciplinas()->sync($validated['body']['disciplinas']);
-
-        return response()->json(['message' => 'Grade created successfully'], 201);
+        return response()->json(['message' => 'Grade updated successfully'], 201);
     }
 
     public function destroy(Grade $grade)
