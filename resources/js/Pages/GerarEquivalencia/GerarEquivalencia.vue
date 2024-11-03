@@ -51,10 +51,12 @@ const deleteGerarEquivalencia = async () => {
                 <Column field="titulo" header="Título"></Column>
                 <Column field="user_id" header="Aluno(a)"></Column>
                 <Column field="curso_antigo" header="Curso Antigo"></Column>
-                <Column field="curso" header="Curso Novo"></Column>
+                <Column field="curso_novo" header="Curso Novo"></Column>
                 <Column field="grade_antiga" header="Grade Antiga"></Column>
                 <Column field="grade_nova" header="Grade Nova"></Column>
-                <Column field="disciplinas" header="Disciplinas"></Column>
+                <Column field="disciplinas_cursadas" header="Disciplinas Cursadas"></Column>
+                <Column field="disciplinas_abatidas" header="Disciplinas Abatidas"></Column>
+                <Column field="disciplinas_atribuidas" header="Disciplinas Atribuídas"></Column>
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">
