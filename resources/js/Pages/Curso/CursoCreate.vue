@@ -112,13 +112,6 @@ export default {
                         class="w-full md:w-20rem"
                     />
                 </div>
-
-<!--                <div>-->
-<!--                    <label class="block text-sm font-bold mb-2" for="ativo">Curso Ativo</label>-->
-<!--                    <input type="checkbox" id="ativo" v-model="curso.ativo"-->
-<!--                           class="form-checkbox h-5 w-5 text-orange-600">-->
-<!--                </div>-->
-
                 <div class="flex items-center justify-between">
                     <button
                         class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
