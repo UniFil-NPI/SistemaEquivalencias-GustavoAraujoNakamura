@@ -58,6 +58,10 @@ const deleteGerarEquivalencia = async () => {
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">
+                            <a :href="route('gerarEquivalencia.edit', slotProps.data.id)">
+                                <Button icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-success p-button-outlined p-mr-2"></Button>
+                            </a>
                             <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
                                     @click="confirmDeleteGerarEquivalencia(slotProps.data.id)">
                             </Button>
