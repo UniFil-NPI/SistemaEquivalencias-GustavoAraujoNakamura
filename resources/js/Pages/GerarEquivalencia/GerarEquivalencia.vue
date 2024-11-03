@@ -65,6 +65,9 @@ const deleteGerarEquivalencia = async () => {
                             <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
                                     @click="confirmDeleteGerarEquivalencia(slotProps.data.id)">
                             </Button>
+                            <Button icon="pi pi-file-pdf" class="p-button-rounded p-button-info p-button-outlined p-mr-2"
+                                    @click="generatePDF(slotProps.data)">
+                            </Button>
                         </div>
                     </template>
                 </Column>
