@@ -30,6 +30,8 @@ class CursoController extends Controller
         $grades = Grade::all();
         return Inertia::render('Curso/CursoCreate', [
             'grades' => $grades,
+            'availableGrades' => Grade::all(),
+
         ]);
     }
 
@@ -52,19 +54,7 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'titulo' => 'required|unique:cursos|max:255',
-            'ano' => 'required|numeric',
-            // Adicione outras validações conforme necessário
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('curso.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        Curso::create($request->all());
+        Curso::create($request->all()['id']);
 
         return redirect()->route('curso.index');
     }
