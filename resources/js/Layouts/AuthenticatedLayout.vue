@@ -64,12 +64,6 @@ const showingNavigationDropdown = ref(false);
                                     Gerar Equivalências
                                 </NavLink>
                             </div>
-
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('relatorio.index')" :active="route().current('relatorio.index')">
-                                    Relatório
-                                </NavLink>
-                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
