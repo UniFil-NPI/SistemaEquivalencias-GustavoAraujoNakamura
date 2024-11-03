@@ -48,12 +48,16 @@ const deleteEquivalencia = async () => {
             </div>
             <DataTable :value="equivalencia" paginator :rows="10">
                 <Column field="titulo" header="Titulo"></Column>
-                <Column field="disciplinas" header="Disciplinas"></Column>
-<!--                <Column field="ativo" header="Ativo">-->
-<!--                    <template #body="slotProps">-->
-<!--                        <span>{{ slotProps.data.ativo ? 'Ativado' : 'Desativado' }}</span>-->
-<!--                    </template>-->
-<!--                </Column>-->
+                <Column field="disciplinas" header="Disciplinas">
+                    <template #body="slotProps">
+                        <span>
+                            <template v-for="(disciplina, index) in slotProps.data.disciplinas" :key="disciplina.id">
+                                {{ disciplina.titulo }}<span v-if="index < slotProps.data.disciplinas.length - 1">, </span>
+                            </template>
+                        </span>
+                    </template>
+                </Column>
+
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">

@@ -13,8 +13,9 @@ class EquivalenciaController extends Controller
 {
     public function index()
     {
+        $equivalencias = Equivalencia::with(['disciplinas'])->get();
         return Inertia::render('Equivalencia/Equivalencia', [
-            'equivalencia' => Equivalencia::all()
+            'equivalencia' => $equivalencias
         ]);
     }
 

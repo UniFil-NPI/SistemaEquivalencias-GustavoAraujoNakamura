@@ -11,4 +11,8 @@ class Equivalencia extends Model
     protected $fillable = [
         'titulo'
     ];
+    public function disciplinas()
+    {
+        return $this->belongsToMany(Disciplina::class, 'disciplinas_equivalencias', 'equivalencia_id', 'disciplina_id');
+    }
 }
