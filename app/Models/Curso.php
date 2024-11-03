@@ -13,8 +13,9 @@ class Curso extends Model
         'titulo',
         'ano',
     ];
+
     public function grades(): BelongsToMany
     {
-        return $this->belongsToMany(Grade::class);
+        return $this->belongsToMany(Grade::class, 'curso_grades');
     }
 }

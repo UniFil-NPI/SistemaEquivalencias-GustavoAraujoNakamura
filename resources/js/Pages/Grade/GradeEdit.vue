@@ -23,15 +23,6 @@ onMounted(async () => {
     console.log('props.grade:', props.selectedDisciplinas);
 });
 
-const carregarGrade = async () => {
-    const page = usePage();
-    try {
-        const response = await axios.get(route('grade.show', page.props.grade.id));
-        this.grade = response.data;
-    } catch (error) {
-        console.error("Erro ao carregar a grade:", error);
-    }
-};
 </script>
 
 <template>

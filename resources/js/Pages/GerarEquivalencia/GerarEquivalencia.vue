@@ -33,6 +33,15 @@ const deleteGerarEquivalencia = async () => {
         console.error(error);
     }
 };
+
+const generatePDF = async (data) => {
+    try {
+        await axios.post(route('pdf.create', data));
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 </script>
 
 <template>

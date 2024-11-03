@@ -30,21 +30,9 @@ const disciplinas = ref(props.disciplinas);
 const isEditing = ref(props.isEditing);
 
 onMounted(async () => {
-    if (isEditing.value && grade.value.id) {
-        await carregarGrade();
-    }
-
     selectedDisciplinas.value = props.selectedDisciplinas;
 });
 
-const carregarGrade = async () => {
-    try {
-        const response = await axios.get(route('grade.show', grade.value.id));
-        grade.value = response.data;
-    } catch (error) {
-        console.error('Erro ao carregar a grade:', error);
-    }
-};
 
 const salvarGrade = async () => {
     try {

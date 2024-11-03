@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
+import {usePage} from '@inertiajs/vue3';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
@@ -191,8 +191,9 @@ const voltar = () => {
                     <div class="w-full">
                         <label class="block text-sm font-bold mb-2" for="ch_insert">Carga Horária</label>
                         <InputText
-                               class="block w-full bg-transparent"
-                               id="ch_insert" name="ch_insert" type="number" v-model="chSelecionada" placeholder="Carga Horária" disabled="disabled" required />
+                            class="block w-full bg-transparent"
+                            id="ch_insert" name="ch_insert" type="number" v-model="chSelecionada"
+                            placeholder="Carga Horária" disabled="disabled" required/>
                     </div>
                 </div>
 
@@ -200,8 +201,9 @@ const voltar = () => {
                 <div class="mt-4">
                     <label class="block text-sm font-bold mb-2" for="titulo_geracao">Título da Geração</label>
                     <input
-                           class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
-                           id="titulo_geracao" v-model="titulo" name="titulo_geracao" type="text" placeholder="Título da geração de equivalências" required>
+                        class="block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 focus:outline-none focus:bg-white"
+                        id="titulo_geracao" v-model="titulo" name="titulo_geracao" type="text"
+                        placeholder="Título da geração de equivalências" required>
                 </div>
 
                 <!-- Botão de Envio -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\Browsershot\Browsershot;
 use App\Models\ResultadosDisciplinas;
@@ -81,14 +82,16 @@ class ResultadoController extends Controller
         }
     }
 
-    public function createPdf()
+    public function createPdf(Request $request)
     {
+        $data = $request->all();
+        $data['gradeAntiga'] = Grade::find($data['grade_antiga']);
+        $data['gradeNova'] = Grade::find($data['grade_nova']);
+        $data['user'] = User::find($data['user_id']);
 
-        $resultado = ResultadosDisciplinas::with(['disciplinasCursadas', 'disciplinasAbatidas', 'disciplinasAtribuidas', 'gradeAntiga', 'gradeNova'])->find($resultado_id);
+        $path = storage_path('app/public/' . $data['user_id'] . '.pdf');
 
-        $path = storage_path('app/public/' . $resultado->titulo . '.pdf');
-
-        Pdf::view('resultadopdf', ['resultado' => $resultado])->save($path);
+        Pdf::view('resultadopdf', ['resultado' => $data])->save($path);
 
         return response()->download($path);
     }

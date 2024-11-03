@@ -1,75 +1,61 @@
-<script>
+<script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
 import MultiSelect from 'primevue/multiselect';
+import {ref} from "vue";
+import {usePage} from "@inertiajs/vue3";
 
-export default {
-    components: {
-        AuthenticatedLayout,
-        MultiSelect,
+const props = defineProps({
+    curso: {
+        type: Object,
+        default: () => ({id: '', titulo: '', ano: '', ativo: false}),
     },
-    props: {
-        curso: {
-            type: Object,
-            default: () => ({ id: '', titulo: '', ano: '', ativo: false  }),
-        },
-        grades: {
-            type: Array,
-            default: () => [],
-        },
-        isEditing: {
-            type: Boolean,
-            default: false,
-        }
+    grades: {
+        type: Array,
+        default: () => [],
     },
-    data() {
-        return {
-            cursoAtual: this.curso,
-            csrfToken: usePage().props.csrf_token,
-            selectedGrades: this.curso.grade || [],
-            availableGrades: [],
-        };
+    isEditing: {
+        type: Boolean,
+        default: false,
     },
-    methods: {
-        async salvarCurso() {
-            const url = this.isEditing ? `/curso/${this.curso.id}` : '/curso';
-            const method = this.isEditing ? 'put' : 'post';
+    availableGrades: {
+        type: Array,
+        default: () => [],
+    },
+    selectedGrade: {
+        type: Array,
+        default: () => [],
+    }
+});
 
-            try {
-                await axios[method](url, {
-                    ...this.curso,
-                    grade: this.selectedGrade,
-                    _token: this.csrfToken,
-                });
+const curso = ref({ ...props.curso });
+const grades = ref(props.grades);
+const isEditing = ref(props.isEditing);
+const availableGrades = ref(props.availableGrades);
+const selectedGrade = ref([...props.selectedGrade]);
 
-                window.location.href = '/curso';
-            } catch (error) {
-                console.error("Erro ao salvar o curso:", error);
-            }
-            window.location.href = '/curso';
-        },
-        async carregarGrades() {
-            try {
-                if (this.grades.length > 0) {
-                    this.availableGrades = this.grades;
-                } else {
-                    const response = await axios.get('/api/grade');
-                    this.availableGrades = response.data;
-                }
-            } catch (error) {
-                console.error("Erro ao carregar as grades:", error);
-            }
-        },
-        voltar() {
-            window.location.href = '/curso';
-        },
-    },
-    async mounted() {
-        await this.carregarGrades();
-    },
+const salvarCurso = async () => {
+    const url = isEditing.value ? `/curso/${curso.value.id}` : '/curso';
+    const method = isEditing.value ? 'put' : 'post';
+
+    try {
+        await axios[method](url, {
+            id: curso.value,
+            grade: selectedGrade.value,
+            _token: usePage().props.csrf_token,
+        });
+
+        window.location.href = '/curso';
+    } catch (error) {
+        console.error("Erro ao salvar o curso:", error);
+    }
+    window.location.href = '/curso';
 };
+
+const voltar = () => {
+    window.location.href = '/curso';
+};
+
 </script>
 
 <template>
@@ -77,7 +63,7 @@ export default {
         <div class="max-w-4xl mx-auto shadow-md rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{ isEditing ? 'Editar Curso' : 'Criar Curso' }}</h2>
             <form @submit.prevent="salvarCurso" class="space-y-4">
-                <input type="hidden" name="_token" :value="csrfToken">
+                <input type="hidden" name="_token" :value="$page.props.csrf_token">
                 <div class="flex justify-start mb-4">
                     <button
                         type="button"
@@ -103,7 +89,7 @@ export default {
                 <div>
                     <label class="block text-sm font-bold mb-2" for="grade">Grades</label>
                     <MultiSelect
-                        v-model="selectedGrades"
+                        v-model="selectedGrade"
                         :options="availableGrades"
                         optionLabel="titulo"
                         optionValue="id"

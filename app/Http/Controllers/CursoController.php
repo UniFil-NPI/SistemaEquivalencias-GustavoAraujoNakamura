@@ -21,7 +21,7 @@ class CursoController extends Controller
     public function index()
     {
         return Inertia::render('Curso/Curso', [
-            'cursos' => Curso::all(),
+            'cursos' => Curso::with('grades')->get(),
         ]);
     }
 
@@ -35,9 +35,12 @@ class CursoController extends Controller
 
     public function edit($id)
     {
-        $curso = Curso::findOrFail($id);
+        $curso = Curso::with('grades')->findOrFail($id);
+
         return Inertia::render('Curso/CursoEdit', [
             'curso' => $curso,
+            'selectedGrades' => $curso->grades->pluck('id')->toArray(),
+            'availableGrades' => Grade::all(),
         ]);
     }
 
@@ -68,11 +71,7 @@ class CursoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'ano' => 'required|integer|min:1900|max:2099',
-            'ativo' => 'required|boolean',
-        ]);
+        $data = $request->all();
 
         // Encontra o curso pelo ID
         $curso = Curso::find($id);
@@ -82,10 +81,12 @@ class CursoController extends Controller
         }
 
         // Atualiza os dados do curso
-        $curso->titulo = $validated['titulo'];
-        $curso->ano = $validated['ano'];
-        $curso->ativo = $validated['ativo'];
+        $curso->titulo = $data['id']['titulo'];
+        $curso->ano = $data['id']['ano'];
+        $curso->ativo = $data['id']['ativo'];
         $curso->save();
+
+        $curso->grades()->sync($data['grade']);
 
         // Retorna uma resposta de sucesso
         return response()->json(['message' => 'Curso atualizado com sucesso', 'curso' => $curso]);

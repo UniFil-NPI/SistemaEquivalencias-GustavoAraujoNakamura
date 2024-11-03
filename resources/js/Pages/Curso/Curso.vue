@@ -19,6 +19,8 @@ const router = useRouter();
 const displayConfirmation = ref(false);
 const selectedCursoId = ref(null);
 
+console.log(cursos)
+
 const confirmDeleteCurso = (id) => {
     selectedCursoId.value = id;
     displayConfirmation.value = true;
@@ -49,7 +51,13 @@ const deleteCurso = async () => {
             <DataTable :value="cursos" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
                 <Column field="ano" header="Ano"></Column>
-                <Column field="grade.titulo" header="Grade"></Column> <!-- Mudança aqui -->
+                <Column header="Grades">
+                    <template #body="slotProps">
+                        <span v-for="grade in slotProps.data.grades">
+                            {{ grade.titulo }}
+                        </span>
+                    </template>
+                </Column> <!-- Mudança aqui -->
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">
