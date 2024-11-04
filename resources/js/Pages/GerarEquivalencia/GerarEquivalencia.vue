@@ -62,8 +62,8 @@ const generatePDF = async (data) => {
                 <Column field="curso" header="Curso"></Column>
                 <Column field="gradeAntiga" header="Grade Antiga"></Column>
                 <Column field="gradeNova" header="Grade Nova"></Column>
-                <Column field="disciplinas_abatidas" header="Disciplinas Abatidas"></Column>
-                <Column field="disciplinas_atribuidas" header="Disciplinas Atribuídas"></Column>
+                <Column class="small-font" field="disciplinas_abatidas" header="Disciplinas Abatidas"></Column>
+                <Column class="small-font" field="disciplinas_atribuidas" header="Disciplinas Atribuídas"></Column>
                 <Column>
                     <template #body="slotProps">
                         <div class="flex justify-end">
@@ -100,5 +100,8 @@ const generatePDF = async (data) => {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
+}
+.small-font {
+    font-size: 0.8rem;
 }
 </style>
