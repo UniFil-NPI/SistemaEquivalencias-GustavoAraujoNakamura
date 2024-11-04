@@ -59,7 +59,7 @@ const voltar = () => {
     <authenticated-layout>
         <div class="max-w-4xl mx-auto rounded px-8 pt-6 pb-8 mt-4">
             <h2 class="mb-4 text-2xl font-bold text-center">{{
-                    isEditing ? 'Editar Equivalencia' : 'Criar Equivalencia'
+                    isEditing ? 'Editar Definir Equivalência' : 'Definir Equivalência'
                 }}</h2>
             <div class="flex items-center justify-between">
                 <button
