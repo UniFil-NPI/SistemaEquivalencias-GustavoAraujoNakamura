@@ -63,6 +63,11 @@ const usuarioSelecionado = ref(props.usuarioSelecionado);
 const titulo = ref(props.equivalenciaAtual?.titulo ?? '');
 const chSelecionada = ref(0);
 
+console.log(props.disciplinas)
+if (isEditing.value) {
+    disciplinas.value = props.disciplinas;
+}
+
 const salvarEquiv = async () => {
     const url = isEditing.value ? `/gerarEquivalencia/${equivalenciaAtual.value.id}` : '/gerarEquivalencia';
     const method = isEditing.value ? 'put' : 'post';
@@ -94,6 +99,8 @@ const handleCh = (newVal) => {
     chSelecionada.value = totalCargaHoraria;
 }
 
+console.log(disciplinaInsert.value)
+
 onMounted(() => {
     if (isEditing) {
         handleCh(disciplinaInsert.value);
@@ -105,7 +112,7 @@ watch(disciplinaInsert, (newVal) => {
 });
 
 watch(gradeNova, async (newVal) => {
-    if (newVal) {
+    if (newVal && !isEditing.value) {
         try {
             const response = await axios.get(`/api/grades/${newVal}/disciplinas`);
             disciplinas.value = response.data;
@@ -140,6 +147,7 @@ const voltar = () => {
                     <Dropdown
                         v-model="usuarioSelecionado"
                         :options="alunos"
+                        :disabled="isEditing"
                         optionLabel="name"
                         optionValue="id"
                         filter
@@ -155,6 +163,7 @@ const voltar = () => {
                         <Dropdown
                             v-model="cursoAntiga"
                             :options="cursos"
+                            :disabled="isEditing"
                             optionLabel="titulo"
                             optionValue="id"
                             filter
@@ -170,6 +179,7 @@ const voltar = () => {
                             :options="cursos"
                             optionLabel="titulo"
                             optionValue="id"
+                            :disabled="isEditing"
                             filter
                             placeholder="Selecione o curso novo"
                             class="w-full"
@@ -189,6 +199,7 @@ const voltar = () => {
                             filter
                             placeholder="Selecione a grade antiga"
                             class="w-full"
+                            :disabled="isEditing"
                         />
                     </div>
 
@@ -202,6 +213,7 @@ const voltar = () => {
                             filter
                             placeholder="Selecione a grade nova"
                             class="w-full"
+                            :disabled="isEditing"
                         />
                     </div>
                 </div>
