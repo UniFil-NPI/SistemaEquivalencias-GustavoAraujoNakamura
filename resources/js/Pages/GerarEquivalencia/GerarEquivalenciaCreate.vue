@@ -46,7 +46,7 @@ const props = defineProps({
 });
 
 // setting options
-const disciplinas = ref([...props.disciplinas]);
+const disciplinas = ref();
 const cursos = ref([...props.cursos]);
 const grades = ref([...props.grades]);
 const alunos = ref([...props.alunos]);
@@ -103,6 +103,18 @@ onMounted(() => {
 watch(disciplinaInsert, (newVal) => {
     handleCh(newVal);
 });
+
+watch(gradeNova, async (newVal) => {
+    if (newVal) {
+        try {
+            const response = await axios.get(`/api/grades/${newVal}/disciplinas`);
+            disciplinas.value = response.data;
+        } catch (error) {
+            console.error("Erro ao buscar disciplinas:", error);
+        }
+    }
+});
+
 const voltar = () => {
     window.location.href = '/gerarEquivalencia'; // Verifique se esta URL está correta
 }
