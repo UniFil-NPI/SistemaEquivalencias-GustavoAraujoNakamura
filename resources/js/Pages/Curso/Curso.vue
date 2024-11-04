@@ -54,7 +54,7 @@ const deleteCurso = async () => {
                 <Column header="Grades">
                     <template #body="slotProps">
                         <span v-for="grade in slotProps.data.grades">
-                            {{ grade.titulo }}
+                            {{ grade.titulo }}, 
                         </span>
                     </template>
                 </Column> <!-- Mudança aqui -->
