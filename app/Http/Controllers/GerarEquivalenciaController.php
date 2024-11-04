@@ -43,6 +43,9 @@ class GerarEquivalenciaController extends Controller
                 ->join('disciplina_grades', 'disciplina_grades.disciplina_id', '=', 'disciplinas.id')
                 ->join('grades', 'grades.id', '=', 'disciplina_grades.grade_id')
                 ->where('grades.id', $equiv->grade_nova)
+                ->whereNotIn('disciplinas.id', DB::table('gerar_equivalencia_disciplinas')
+                    ->where('gerar_equivalencia_id', $equiv->id)
+                    ->select('disciplina_id'))
                 ->select('disciplinas.titulo')
                 ->pluck('titulo');
 
