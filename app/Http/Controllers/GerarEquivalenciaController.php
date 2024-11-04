@@ -30,7 +30,9 @@ class GerarEquivalenciaController extends Controller
             $equiv->disciplinas = implode(', ', $equiv->disciplinas?->toArray());
 
             $equiv->gradeAntiga = Grade::find($equiv->grade_antiga)?->titulo;
+            $equiv->selectedGradeAntiga = Grade::find($equiv->grade_antiga)?->id;
             $equiv->gradeNova = Grade::find($equiv->grade_nova)?->titulo;
+            $equiv->selectedGradeNova = Grade::find($equiv->grade_nova)?->id;
 
             $equiv->cursoNovo = Curso::find($equiv->curso_novo)?->titulo;
             $equiv->cursoAntigo = Curso::find($equiv->curso_antigo)?->titulo;

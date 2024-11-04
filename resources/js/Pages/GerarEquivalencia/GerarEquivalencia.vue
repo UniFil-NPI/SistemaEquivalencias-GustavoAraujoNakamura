@@ -35,8 +35,14 @@ const deleteGerarEquivalencia = async () => {
 };
 
 const generatePDF = async (data) => {
+    console.log(data)
     try {
-        const response = await axios.get(route('pdf.create', data), {
+        const response = await axios.get(route('pdf.create', {
+            grade_antiga: data.selectedGradeAntiga,
+            grade_nova: data.selectedGradeNova,
+            user_id: data.user_id,
+            id: data.id,
+        }), {
             responseType: 'blob', // Important for handling binary data
         });
 

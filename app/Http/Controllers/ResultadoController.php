@@ -93,6 +93,8 @@ class ResultadoController extends Controller
 
         $equivalencia = GerarEquivalencia::find($data['id']);
 
+        $data['titulo'] = $equivalencia->titulo;
+
         $data['disciplinasAbatidas'] = DB::table('gerar_equivalencia_disciplinas')
             ->where('gerar_equivalencia_id', $equivalencia->id)
             ->join('disciplinas', 'disciplinas.id', '=', 'gerar_equivalencia_disciplinas.disciplina_id')
