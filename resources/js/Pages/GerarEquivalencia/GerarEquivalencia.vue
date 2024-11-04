@@ -69,7 +69,8 @@ const generatePDF = async (data) => {
             <DataTable :value="gerarEquivalencias" paginator :rows="10">
                 <Column field="titulo" header="Título"></Column>
                 <Column field="usuario" header="Aluno(a)"></Column>
-                <Column field="curso" header="Curso"></Column>
+                <Column field="cursoNovo" header="Curso Novo"></Column>
+                <Column field="cursoAntigo" header="Curso Antigo"></Column>
                 <Column field="gradeAntiga" header="Grade Antiga"></Column>
                 <Column field="gradeNova" header="Grade Nova"></Column>
                 <Column class="small-font" field="disciplinas_abatidas" header="Disciplinas Abatidas"></Column>

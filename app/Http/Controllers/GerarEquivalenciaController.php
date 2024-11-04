@@ -32,8 +32,8 @@ class GerarEquivalenciaController extends Controller
             $equiv->gradeAntiga = Grade::find($equiv->grade_antiga)?->titulo;
             $equiv->gradeNova = Grade::find($equiv->grade_nova)?->titulo;
 
-            $equiv->curso_novo = Curso::find($equiv->curso_novo)?->titulo;
-            $equiv->curso_antigo = Curso::find($equiv->curso_antigo)?->titulo;
+            $equiv->cursoNovo = Curso::find($equiv->curso_novo)?->titulo;
+            $equiv->cursoAntigo = Curso::find($equiv->curso_antigo)?->titulo;
 
             $equiv->usuario = User::find($equiv->user_id)?->name;
 
