@@ -27,17 +27,17 @@ class GerarEquivalenciaController extends Controller
                 ->select('disciplinas.titulo')
                 ->pluck('titulo');
 
-            $equiv->disciplinas = implode(', ', $equiv->disciplinas->toArray());
+            $equiv->disciplinas = implode(', ', $equiv->disciplinas?->toArray());
 
-            $equiv->gradeAntiga = Grade::find($equiv->grade_antiga)->titulo;
-            $equiv->gradeNova = Grade::find($equiv->grade_nova)->titulo;
+            $equiv->gradeAntiga = Grade::find($equiv->grade_antiga)?->titulo;
+            $equiv->gradeNova = Grade::find($equiv->grade_nova)?->titulo;
 
-            $equiv->curso_novo = Curso::find($equiv->curso_novo)->titulo;
-            $equiv->curso_antigo = Curso::find($equiv->curso_antigo)->titulo;
+            $equiv->curso_novo = Curso::find($equiv->curso_novo)?->titulo;
+            $equiv->curso_antigo = Curso::find($equiv->curso_antigo)?->titulo;
 
-            $equiv->usuario = User::find($equiv->user_id)->name;
+            $equiv->usuario = User::find($equiv->user_id)?->name;
 
-            $equiv->disciplinas_abatidas = $equiv->disciplinas;
+            $equiv->disciplinas_abatidas = $equiv?->disciplinas;
 
             $equiv->disciplinas_atribuidas = DB::table('disciplinas')
                 ->join('disciplina_grades', 'disciplina_grades.disciplina_id', '=', 'disciplinas.id')
@@ -49,7 +49,7 @@ class GerarEquivalenciaController extends Controller
                 ->select('disciplinas.titulo')
                 ->pluck('titulo');
 
-            $equiv->disciplinas_atribuidas = implode(', ', $equiv->disciplinas_atribuidas->toArray());
+            $equiv->disciplinas_atribuidas = implode(', ', $equiv?->disciplinas_atribuidas?->toArray());
         }
 
         return Inertia::render('GerarEquivalencia/GerarEquivalencia', [
