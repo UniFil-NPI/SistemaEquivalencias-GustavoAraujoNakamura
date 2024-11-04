@@ -15,7 +15,10 @@ return new class extends Migration {
             $table->id();
 
             $table->string('titulo');
-            $table->foreignId('curso')->constrained('cursos');
+
+            $table->foreignId('curso_antigo')->constrained('cursos');
+            $table->foreignId('curso_novo')->constrained('cursos');
+
             $table->foreignId('grade_antiga')->constrained('grades');
             $table->foreignId('grade_nova')->constrained('grades');
 

@@ -5,10 +5,14 @@ import {usePage} from '@inertiajs/vue3';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 
 const props = defineProps({
     disciplinas: {
+        type: Array,
+        default: () => [],
+    },
+    disciplinasSelecionadas: {
         type: Array,
         default: () => [],
     },
@@ -24,6 +28,12 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    cursoAntiga: {
+    },
+    cursoNova: {
+    },
+    gradeAntiga: {},
+    gradeNova: {},
     isEditing: {
         type: Boolean,
         default: false
@@ -31,7 +41,8 @@ const props = defineProps({
     equivalenciaAtual: {
         type: Object,
         default: () => ({id: '', titulo: '', curso: '', equivalencia: ''}),
-    }
+    },
+    usuarioSelecionado: {}
 });
 
 // setting options
@@ -43,13 +54,13 @@ const isEditing = ref(props.isEditing);
 const equivalenciaAtual = ref({...props.equivalenciaAtual});
 
 // setting state handlers
-const cursoAntiga = ref();
-const cursoNova = ref();
-const gradeAntiga = ref();
-const gradeNova = ref();
-const disciplinaInsert = ref();
-const usuarioSelecionado = ref();
-const titulo = ref();
+const cursoAntiga = ref(props.cursoAntiga);
+const cursoNova = ref(props.cursoNova);
+const gradeAntiga = ref(props.gradeAntiga);
+const gradeNova = ref(props.gradeNova);
+const disciplinaInsert = ref([...props.disciplinasSelecionadas]);
+const usuarioSelecionado = ref(props.usuarioSelecionado);
+const titulo = ref(props.equivalenciaAtual?.titulo ?? '');
 const chSelecionada = ref(0);
 
 const salvarEquiv = async () => {
@@ -60,8 +71,8 @@ const salvarEquiv = async () => {
         await axios[method](url, {
             titulo: titulo.value,
             disciplinas: disciplinaInsert.value,
-            cursoAntiga: cursoAntiga.value,
-            curso: cursoNova.value,
+            curso_antigo: cursoAntiga.value,
+            curso_novo: cursoNova.value,
             grade_antiga: gradeAntiga.value,
             grade_nova: gradeNova.value,
             usuarioSelecionado: usuarioSelecionado.value,
@@ -74,13 +85,23 @@ const salvarEquiv = async () => {
     }
 }
 
-watch(disciplinaInsert, (newVal) => {
+const handleCh = (newVal) => {
     const totalCargaHoraria = newVal.reduce((total, disciplinaId) => {
         const disciplina = disciplinas.value.find(d => d.id === disciplinaId);
         return total + (disciplina ? parseInt(disciplina.carga_horaria, 10) : 0);
     }, 0);
 
     chSelecionada.value = totalCargaHoraria;
+}
+
+onMounted(() => {
+    if (isEditing) {
+        handleCh(disciplinaInsert.value);
+    }
+})
+
+watch(disciplinaInsert, (newVal) => {
+    handleCh(newVal);
 });
 const voltar = () => {
     window.location.href = '/gerarEquivalencia'; // Verifique se esta URL está correta

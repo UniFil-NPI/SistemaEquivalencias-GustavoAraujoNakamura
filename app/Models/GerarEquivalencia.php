@@ -15,7 +15,8 @@ class GerarEquivalencia extends Model
 
     protected $fillable = [
         'titulo',
-        'curso',
+        'curso_antigo',
+        'curso_novo',
         'grade_antiga',
         'grade_nova',
         'user_id',
@@ -49,5 +50,15 @@ class GerarEquivalencia extends Model
     public function gradeNova()
     {
         return $this->belongsTo(Grades::class, 'grade_nova');
+    }
+
+    public function cursoAntigo()
+    {
+        return $this->belongsTo(Cursos::class, 'curso_antigo');
+    }
+
+    public function cursoNovo()
+    {
+        return $this->belongsTo(Cursos::class, 'curso_novo');
     }
 }

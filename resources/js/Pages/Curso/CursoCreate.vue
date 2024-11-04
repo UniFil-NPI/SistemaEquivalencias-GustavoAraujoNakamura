@@ -33,6 +33,7 @@ const grades = ref(props.grades);
 const isEditing = ref(props.isEditing);
 const availableGrades = ref(props.availableGrades);
 const selectedGrade = ref([...props.selectedGrade]);
+console.log(selectedGrade.value)
 
 const salvarCurso = async () => {
     const url = isEditing.value ? `/curso/${curso.value.id}` : '/curso';

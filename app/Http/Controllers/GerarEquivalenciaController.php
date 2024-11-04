@@ -39,7 +39,8 @@ class GerarEquivalenciaController extends Controller
             $equiv->gradeAntiga = Grade::find($equiv->grade_antiga)->titulo;
             $equiv->gradeNova = Grade::find($equiv->grade_nova)->titulo;
 
-            $equiv->curso = Curso::find($equiv->curso)->titulo;
+            $equiv->curso_novo = Curso::find($equiv->curso_novo)->titulo;
+            $equiv->curso_antigo = Curso::find($equiv->curso_antigo)->titulo;
 
             $equiv->usuario = User::find($equiv->user_id)->name;
 
@@ -78,8 +79,23 @@ class GerarEquivalenciaController extends Controller
     public function edit($id)
     {
         $gerarEquivalencia = GerarEquivalencia::findOrFail($id);
-        return Inertia::render('GerarEquivalencia/GerarEquivalenciaEdit', [
-            'gerarEquivalencia' => $gerarEquivalencia,
+
+        return Inertia::render('GerarEquivalencia/GerarEquivalenciaCreate', [
+            'usuarioSelecionado' => $gerarEquivalencia->user_id,
+            'equivalenciaAtual' => $gerarEquivalencia,
+            'isEditing' => true,
+            'disciplinas' => Disciplina::all(),
+            'disciplinasSelecionadas' => DB::table('gerar_equivalencia_disciplinas')
+                ->where('gerar_equivalencia_id', $gerarEquivalencia->id)
+                ->select('disciplina_id')
+                ->pluck('disciplina_id'),
+            'cursos' => Curso::all(),
+            'grades' => Grade::all(),
+            'alunos' => User::all(),
+            'cursoAntiga' => $gerarEquivalencia->curso_antigo,
+            'cursoNova' => $gerarEquivalencia->curso_novo,
+            'gradeAntiga' => $gerarEquivalencia->grade_antiga,
+            'gradeNova' => $gerarEquivalencia->grade_nova,
         ]);
     }
 
@@ -98,13 +114,13 @@ class GerarEquivalenciaController extends Controller
                 [
                     ...$request->only([
                         'titulo',
-                        'curso',
+                        'curso_novo',
+                        'curso_antigo',
                         'grade_antiga',
                         'grade_nova'
                     ]),
                     'user_id' => $request->get('usuarioSelecionado'),
                 ];
-
 
             $equiv = GerarEquivalencia::create($data);
 
