@@ -50,4 +50,4 @@ Route::put('/curso/{curso}', [CursoController::class, 'update'])->name('curso.up
 Route::post('/curso', [CursoController::class, 'store'])->name('curso.store');
 
 
-Route::post('/pdf/create', [ResultadoController::class, 'createPdf'])->name('pdf.create');
+Route::get('/pdf/create', [ResultadoController::class, 'createPdf'])->name('pdf.create');

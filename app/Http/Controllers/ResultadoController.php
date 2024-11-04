@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GerarEquivalencia;
 use App\Models\User;
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\Browsershot\Browsershot;
@@ -85,9 +86,28 @@ class ResultadoController extends Controller
     public function createPdf(Request $request)
     {
         $data = $request->all();
+
         $data['gradeAntiga'] = Grade::find($data['grade_antiga']);
         $data['gradeNova'] = Grade::find($data['grade_nova']);
         $data['user'] = User::find($data['user_id']);
+
+        $equivalencia = GerarEquivalencia::find($data['id']);
+
+        $data['disciplinasAbatidas'] = DB::table('gerar_equivalencia_disciplinas')
+            ->where('gerar_equivalencia_id', $equivalencia->id)
+            ->join('disciplinas', 'disciplinas.id', '=', 'gerar_equivalencia_disciplinas.disciplina_id')
+            ->select('*')
+            ->get();
+
+        $data['disciplinasAtribuidas'] = DB::table('disciplinas')
+            ->join('disciplina_grades', 'disciplina_grades.disciplina_id', '=', 'disciplinas.id')
+            ->join('grades', 'grades.id', '=', 'disciplina_grades.grade_id')
+            ->where('grades.id', $equivalencia->grade_nova)
+            ->whereNotIn('disciplinas.id', DB::table('gerar_equivalencia_disciplinas')
+                ->where('gerar_equivalencia_id', $equivalencia->id)
+                ->select('disciplina_id'))
+            ->select('*')
+            ->get();
 
         $path = storage_path('app/public/' . $data['user_id'] . '.pdf');
 

@@ -11,30 +11,6 @@
         </div>
         <div class="pt-6">
             <h2 class="text-xl font-bold">
-                Disciplinas cursadas na grade antiga -
-                <span class="text-amber-500">{{ $resultado->gradeAntiga['titulo'] ?? '' }}</span>
-            </h2>
-            <table class="min-w-full leading-normal">
-                <thead>
-                <tr>
-                    <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Código</th>
-                    <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Título</th>
-                    <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Carga Horária</th>
-                </tr>
-                </thead>
-                <span>
-                    {{ $resultado['disciplinas'] }}
-                </span>
-            </table>
-        </div>
-        <div class="pt-6">
-            <h2 class="text-xl font-bold">
                 Disciplinas abatidas da grade nova -
                 <span class="text-amber-500">{{ $resultado->gradeNova['titulo'] ?? '' }}</span>
             </h2>
@@ -52,6 +28,20 @@
                         Carga Horária</th>
                 </tr>
                 </thead>
+                <tbody>
+                @forelse ($resultado['disciplinasAbatidas'] as $disciplina)
+                    <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $disciplina->codigo }}
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $disciplina->titulo }}
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            {{ $disciplina->carga_horaria }}</td>
+                    </tr>
+                @empty
+                    Nenhuma disciplina encontrada.
+                @endforelse
+                </tbody>
             </table>
         </div>
         <div class="pt-6">
@@ -73,6 +63,23 @@
                         Carga Horária</th>
                 </tr>
                 </thead>
+                <tbody>
+                @forelse ($resultado['disciplinasAtribuidas'] as $disciplina)
+                    <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $disciplina->codigo }}
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $disciplina->titulo }}
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            {{ $disciplina->carga_horaria }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            Nenhuma disciplina encontrada.</td>
+                    </tr>
+                @endforelse
+                </tbody>
             </table>
         </div>
     </div>

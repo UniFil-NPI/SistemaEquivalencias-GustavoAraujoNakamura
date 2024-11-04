@@ -36,7 +36,17 @@ const deleteGerarEquivalencia = async () => {
 
 const generatePDF = async (data) => {
     try {
-        await axios.post(route('pdf.create', data));
+        const response = await axios.get(route('pdf.create', data), {
+            responseType: 'blob', // Important for handling binary data
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${data.titulo}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     } catch (error) {
         console.error(error);
     }
@@ -75,6 +85,7 @@ const generatePDF = async (data) => {
                                     @click="confirmDeleteGerarEquivalencia(slotProps.data.id)">
                             </Button>
                             <Button icon="pi pi-file-pdf" class="p-button-rounded p-button-info p-button-outlined p-mr-2"
+                                    id="download_pdf"
                                     @click="generatePDF(slotProps.data)">
                             </Button>
                         </div>
