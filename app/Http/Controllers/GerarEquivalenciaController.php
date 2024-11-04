@@ -11,16 +11,9 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
-/**
- *
- * @param Request $request
- * @param int $id
- * @return Response
- */
 class GerarEquivalenciaController extends Controller
 {
     public function index()
@@ -44,17 +37,12 @@ class GerarEquivalenciaController extends Controller
 
             $equiv->usuario = User::find($equiv->user_id)->name;
 
-            $equiv->disciplinas_abatidas = DB::table('gerar_equivalencia_disciplinas')
-                ->where('gerar_equivalencia_id', $equiv->id)
-                ->join('disciplinas', 'disciplinas.id', '=', 'gerar_equivalencia_disciplinas.disciplina_id')
-                ->select('disciplinas.titulo')
-                ->pluck('titulo');
+            $equiv->disciplinas_abatidas = $equiv->disciplinas;
 
-            $equiv->disciplinas_abatidas = implode(', ', $equiv->disciplinas_abatidas->toArray());
-
-            $equiv->disciplinas_atribuidas = DB::table('gerar_equivalencia_disciplinas')
-                ->where('gerar_equivalencia_id', $equiv->id)
-                ->join('disciplinas', 'disciplinas.id', '=', 'gerar_equivalencia_disciplinas.disciplina_id')
+            $equiv->disciplinas_atribuidas = DB::table('disciplinas')
+                ->join('disciplina_grades', 'disciplina_grades.disciplina_id', '=', 'disciplinas.id')
+                ->join('grades', 'grades.id', '=', 'disciplina_grades.grade_id')
+                ->where('grades.id', $equiv->grade_nova)
                 ->select('disciplinas.titulo')
                 ->pluck('titulo');
 
@@ -147,27 +135,46 @@ class GerarEquivalenciaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'ano' => 'required|integer|min:1900|max:2099',
-            'ativo' => 'required|boolean',
-        ]);
+        try {
+            DB::beginTransaction();
 
-        // Encontra o gerarEquivalencia pelo ID
-        $gerarEquivalencia = GerarEquivalencia::find($id);
+            $equiv = GerarEquivalencia::find($id);
 
-        if (!$gerarEquivalencia) {
-            return response()->json(['message' => 'GerarEquivalencia não encontrado'], 404);
+            $data =
+                [
+                    ...$request->only([
+                        'titulo',
+                        'curso_novo',
+                        'curso_antigo',
+                        'grade_antiga',
+                        'grade_nova'
+                    ]),
+                    'user_id' => $request->get('usuarioSelecionado'),
+                ];
+
+            $equiv->update($data);
+
+            $equivalenciaDisciplinas = $request->only(['disciplinas']);
+
+            DB::table('gerar_equivalencia_disciplinas')
+                ->where('gerar_equivalencia_id', $equiv->id)
+                ->delete();
+
+            foreach ($equivalenciaDisciplinas['disciplinas'] as $equivalenciaDisciplina) {
+                DB::table('gerar_equivalencia_disciplinas')->insert([
+                    'disciplina_id' => $equivalenciaDisciplina,
+                    'gerar_equivalencia_id' => $equiv->id
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json(['message' => 'GerarEquivalencia atualizado com sucesso']);
+        } catch (Exception $e) {
+            DB::rollBack();
+            echo(var_dump($e->getMessage()));
+            return response()->json(['message' => 'Erro ao criar a equivalência'], 500);
         }
-
-        // Atualiza os dados do gerarEquivalencia
-        $gerarEquivalencia->titulo = $validated['titulo'];
-        $gerarEquivalencia->ano = $validated['ano'];
-        $gerarEquivalencia->ativo = $validated['ativo'];
-        $gerarEquivalencia->save();
-
-        // Retorna uma resposta de sucesso
-        return response()->json(['message' => 'GerarEquivalencia atualizado com sucesso', 'gerarEquivalencia' => $gerarEquivalencia]);
     }
 
     public function destroy(Request $request)
