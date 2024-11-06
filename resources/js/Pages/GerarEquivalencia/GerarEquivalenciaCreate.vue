@@ -151,7 +151,7 @@ const voltar = () => {
                         optionLabel="name"
                         optionValue="id"
                         filter
-                        placeholder="escolha apenas um aluno"
+                        placeholder="escolha o aluno"
                         class="w-full"
                     />
                 </div>
@@ -228,7 +228,7 @@ const voltar = () => {
                             optionLabel="titulo"
                             optionValue="id"
                             filter
-                            placeholder="Selecione as disciplinas"
+                            placeholder="Selecione as disciplinas que o aluno já concluiu"
                             class="w-full"
                         />
                     </div>
