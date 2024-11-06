@@ -2,6 +2,9 @@
 <div class="p-20">
     <div class="container mx-auto pt-12 pb-6">
         <div class="bg-white overflow-hidden">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-3">
+                Usuario Solicitante - nome: <span class="text-amber-500">{{ $resultado['user']->name ?? '' }}</span> email: <span class="text-amber-500">{{ $resultado['user']->email ?? '' }}</span>
+            </h2>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Resultado da geração de equivalências -
@@ -10,9 +13,12 @@
             </div>
         </div>
         <div class="pt-6">
+            <h1 class="text-xl font-bold mb-4">
+                Curso - <span class="text-amber-500">{{ $resultado['gradeNova']->cursos()->first()->titulo ?? '' }}</span>
+            </h1>
             <h2 class="text-xl font-bold">
                 Disciplinas abatidas da grade nova -
-                <span class="text-amber-500">{{ $resultado->gradeNova['titulo'] ?? '' }}</span>
+                <span class="text-amber-500">{{ $resultado['gradeNova']->titulo ?? '' }}</span>
             </h2>
             <table class="min-w-full leading-normal">
                 <thead>
@@ -47,7 +53,7 @@
         <div class="pt-6">
             <h2 class="text-xl font-bold">
                 Disciplinas a cursar na grade nova -
-                <span class="text-amber-500">{{ $resultado->gradeNova['titulo'] ?? '' }}</span>
+                <span class="text-amber-500">{{ $resultado['gradeNova']->titulo ?? '' }}</span>
             </h2>
             <table class="min-w-full leading-normal">
                 <thead>
