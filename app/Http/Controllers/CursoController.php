@@ -6,6 +6,7 @@ use App\Models\Curso;
 use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -54,9 +55,17 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        Curso::create($request->all()['id']);
+        $curso = Curso::create($request->all()['id']);
+        $curso->save();
 
-        return redirect()->route('curso.index');
+        foreach ($request->all()['grade'] as $key => $grade) {
+            DB::table('curso_grades')->insert([
+                'curso_id' => $curso->id,
+                'grade_id' => $grade
+            ]);
+        }
+
+//        return redirect()->route('curso.index');
     }
 
     public function update(Request $request, $id)
